@@ -42,7 +42,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 		/** @type {import('@docusaurus/preset-classic').ThemeConfig} */
 		({
 			navbar: {
-				title: 'My Site',
+				title: 'Spearmint',
 				logo: {
 					alt: 'My Site Logo',
 					src: 'img/logo.svg',
@@ -52,7 +52,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 						type: 'doc',
 						docId: 'intro',
 						position: 'left',
-						label: 'Tutorial',
+						label: 'Docs',
 					},
 					// { to: '/blog', label: 'Blog', position: 'left' },
 					{
@@ -69,7 +69,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 						title: 'Docs',
 						items: [
 							{
-								label: 'Tutorial',
+								label: 'Docs',
 								to: '/docs/intro',
 							},
 						],
@@ -94,10 +94,6 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 					{
 						title: 'More',
 						items: [
-							{
-								label: 'Blog',
-								to: '/blog',
-							},
 							{
 								label: 'GitHub',
 								href: 'https://github.com/facebook/docusaurus',
