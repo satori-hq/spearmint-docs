@@ -17,7 +17,7 @@ e.g. `[REPLACE_ME]`
 
 You will be emailed your api key and an activation link.
 
-You have 2 minutes to activate [YOUR_DESIRED_APP_NAME] otherwise another user can claim it.
+You have 2 minutes to activate your app.
 
 #### Example:
 

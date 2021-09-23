@@ -6,16 +6,23 @@
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: rgb(33, 175, 144);
-  --ifm-color-primary-darker: rgb(31, 165, 136);
-  --ifm-color-primary-darkest: rgb(26, 136, 112);
-  --ifm-color-primary-light: rgb(70, 203, 174);
-  --ifm-color-primary-lighter: rgb(102, 212, 189);
-  --ifm-color-primary-lightest: rgb(146, 224, 208);
+  --ifm-color-primary: #37BA8B;
+  --ifm-color-primary-dark:#145746;
+  --ifm-color-primary-darker: #145746;
+  --ifm-color-primary-darkest: #26403A;
+  --ifm-color-primary-light: #38C378;
+  --ifm-color-primary-lighter: #C5EBD6;
+  --ifm-color-primary-lightest: #E6FAEF;
   --ifm-code-font-size: 95%;
   --margin: 16px;
   --half: 8px;
+
+  --ifm-color-success-dark: var(--ifm-color-primary-light);
+  --ifm-color-success-contrast-background: var(--ifm-color-primary-lightest);
+}
+
+html[data-theme='dark'] {
+	--ifm-color-success-contrast-background: #1B2A24;
 }
 
 .docusaurus-highlight-code-line {
@@ -29,9 +36,22 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
   background-color: rgba(0, 0, 0, 0.3);
 }
 
+code {
+	background-color: var(--ifm-color-primary-lighter);
+}
+html[data-theme='dark'] code {
+	background-color: var(--ifm-color-primary-darkest);
+}
+
 .custom-button {
 	display: inline-block;
 	padding: var(--half) var(--margin);
 	margin-bottom: var(--margin);
 	border: 1px solid var(--ifm-color-primary);
+	border-radius: var(--ifm-pagination-nav-border-radius);
+}
+
+.custom-button:hover {
+	color: white;
+	background: var(--ifm-color-primary);
 }
