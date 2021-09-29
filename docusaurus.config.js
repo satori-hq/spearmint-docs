@@ -4,8 +4,8 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 // With JSDoc @type annotations, IDEs can provide config autocompletion
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 (module.exports = {
-	title: 'My Site',
-	tagline: 'Dinosaurs are cool',
+	title: 'Spearmint by Satori',
+	tagline: 'Global & Resilient Crypto Minting API',
 	url: 'https://your-docusaurus-test-site.com',
 	baseUrl: '/',
 	onBrokenLinks: 'throw',
@@ -13,6 +13,10 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 	favicon: 'img/favicon.ico',
 	organizationName: 'facebook', // Usually your GitHub org/user name.
 	projectName: 'docusaurus', // Usually your repo name.
+
+	plugins: [
+		'docusaurus-plugin-sass', 
+	],
 
 	presets: [
 		[
@@ -32,7 +36,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 				//     'https://github.com/facebook/docusaurus/edit/main/website/blog/',
 				// },
 				theme: {
-					customCss: require.resolve('./src/css/custom.css'),
+					customCss: require.resolve('./src/css/custom.scss'),
 				},
 			}),
 		],
@@ -54,9 +58,13 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 						position: 'left',
 						label: 'Docs',
 					},
-					// { to: '/blog', label: 'Blog', position: 'left' },
 					{
-						href: 'https://github.com/facebook/docusaurus',
+						to: '/dashboard',
+						position: 'left',
+						label: 'Dashboard',
+					},
+					{
+						href: 'https://github.com/satori-hq/spearmint-docs',
 						label: 'GitHub',
 						position: 'right',
 					},
@@ -96,7 +104,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 						items: [
 							{
 								label: 'GitHub',
-								href: 'https://github.com/facebook/docusaurus',
+								href: 'https://github.com/satori-hq/spearmint-docs',
 							},
 						],
 					},

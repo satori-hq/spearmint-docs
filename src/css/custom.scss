@@ -21,6 +21,14 @@
   --ifm-color-success-contrast-background: var(--ifm-color-primary-lightest);
 }
 
+.navbar--fixed-top {
+	height: 96px;
+}
+
+.navbar__brand {
+	height: 64px;
+}
+
 html[data-theme='dark'] {
 	--ifm-color-success-contrast-background: #1B2A24;
 }

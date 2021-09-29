@@ -3,13 +3,13 @@ sidebar_position: 3
 ---
 import { TryItNow } from '../../src/components/TryItNow'
 
-# Create an NFT Type
+# Create an NFT Series
 
 First you need to find out your collections contract ID. You can do that by getting a list of your collections.
 #### Example:
 
 ```js
-await fetch(`https://spearmint.satori.art/v1/api/[YOUR_APP_NAME]/collections`, {
+await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/collections`, {
 	method: 'GET',
 	headers: new Headers({ authorization: 'Bearer [YOUR_API_KEY]' }),
 })
@@ -20,8 +20,8 @@ await fetch(`https://spearmint.satori.art/v1/api/[YOUR_APP_NAME]/collections`, {
 
 ```js
 
-await fetch(`https://spearmint.satori.art/v1/api/[YOUR_APP_NAME]/type`, {
-	method: 'PUT',
+await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/type`, {
+	method: 'POST',
 	headers: new Headers({
 		'authorization': 'Bearer [YOUR_API_KEY]',
 		'nft-content': JSON.stringify({

@@ -5,8 +5,8 @@ sidebar_position: 99
 ```
 /// Example
 
-await fetch(`https://spearmint.satori.art/v1/api/test/collection`, {
-	method: 'PUT',
+await fetch(`[API_ORIGIN]/v1/api/test/collection`, {
+	method: 'POST',
 	headers: new Headers({ authorization: 'Bearer [YOUR_API_KEY]' }),
 	body: JSON.stringify({
 		title: 'My Sample NFT Title 🥰🔥🚀'
@@ -19,8 +19,8 @@ await fetch(`https://spearmint.satori.art/v1/api/test/collection`, {
 ```
 /// Example
 
-await fetch(`https://spearmint.satori.art/v1/api/test/type`, {
-	method: 'PUT',
+await fetch(`[API_ORIGIN]/v1/api/test/type`, {
+	method: 'POST',
 	headers: new Headers({
 		'authorization': 'Bearer 4jNUIXJhsTYnHUGqbSiWv',
 		'nft-content': JSON.stringify({
@@ -38,8 +38,8 @@ await fetch(`https://spearmint.satori.art/v1/api/test/type`, {
 ## Create a Claim
 
 ```
-await fetch(`https://spearmint.satori.art/v1/api/[YOUR_APP_NAME]/claim`, {
-	method: 'PUT',
+await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/claim`, {
+	method: 'POST',
 	headers: new Headers({ authorization: 'Bearer [YOUR_API_KEY]' }),
 	body: JSON.stringify({
 		contractId: [NFT_CONTRACT_ID],
@@ -49,8 +49,8 @@ await fetch(`https://spearmint.satori.art/v1/api/[YOUR_APP_NAME]/claim`, {
 
 /// Example
 
-await fetch(`https://spearmint.satori.art/v1/api/test/claim`, {
-	method: 'PUT',
+await fetch(`[API_ORIGIN]/v1/api/test/claim`, {
+	method: 'POST',
 	headers: new Headers({ authorization: 'Bearer 4jNUIXJhsTYnHUGqbSiWv' }),
 	body: JSON.stringify({
 		contractId: 'test2.snft.testnet',
@@ -64,7 +64,7 @@ await fetch(`https://spearmint.satori.art/v1/api/test/claim`, {
 ```
 /// Example
 
-await fetch(`https://spearmint.satori.art/v1/claim/body-code/linkdrop`, {
+await fetch(`[API_ORIGIN]/v1/claim/body-code/linkdrop`, {
 	method: 'POST',
 	body: JSON.stringify({
 		code: 'VW5lW7-oR5bgPZCibOLyP',
@@ -79,7 +79,7 @@ await fetch(`https://spearmint.satori.art/v1/claim/body-code/linkdrop`, {
 
 /// Example
 
-await fetch(`https://spearmint.satori.art/v1/claim/body-code/nft`, {
+await fetch(`[API_ORIGIN]/v1/claim/body-code/nft`, {
 	method: 'POST',
 	body: JSON.stringify({
 		code: 'VW5lW7-oR5bgPZCibOLyP',

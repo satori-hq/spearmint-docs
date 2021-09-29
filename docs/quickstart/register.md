@@ -22,8 +22,8 @@ You have 2 minutes to activate your app.
 #### Example:
 
 ```js
-await fetch(`https://spearmint.satori.art/v1/api/[YOUR_DESIRED_APP_NAME]/register`, {
-	method: 'PUT',
+await fetch(`[API_ORIGIN]/v1/api/[YOUR_DESIRED_APP_NAME]/register`, {
+	method: 'POST',
     headers: new Headers({ 'Referrer-Policy': 'no-referrer' }),
 	body: JSON.stringify({
 		email: '[YOUR_EMAIL]'

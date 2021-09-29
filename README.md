@@ -1,6 +1,8 @@
-# Website
+# Spearmint Docs
 
-This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
+Spearmint is a globally available & resilient NFT minting API.
+
+"1/1 NFT Sales? How about 1/1,000,000? LFG!"
 
 ### Installation
 
