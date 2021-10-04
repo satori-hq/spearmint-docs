@@ -1,7 +1,8 @@
 ---
 sidebar_position: 1
 ---
-import { TryItNow } from '../../src/components/TryItNow'
+import { TryItNowWithEnv } from '../../src/components/TryItNow'
+import { Dialog } from '../../src/components/Dialog'
 
 # Register
 
@@ -30,4 +31,5 @@ await fetch(`[API_ORIGIN]/v1/api/[YOUR_DESIRED_APP_NAME]/register`, {
 	})
 })
 ```
-<TryItNow />
+<TryItNowWithEnv />
+<Dialog />

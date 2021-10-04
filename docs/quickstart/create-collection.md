@@ -1,7 +1,8 @@
 ---
 sidebar_position: 2
 ---
-import { TryItNow } from '../../src/components/TryItNow'
+import { TryItNowWithEnv } from '../../src/components/TryItNow'
+import { Dialog } from '../../src/components/Dialog'
 
 # Create an NFT Collection
 
@@ -16,5 +17,6 @@ await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/collection`, {
 	})
 })
 ```
-<TryItNow />
+<TryItNowWithEnv />
+<Dialog />
 

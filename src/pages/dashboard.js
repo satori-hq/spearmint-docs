@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '@theme/Layout';
+
+import { getCall } from '../utils/api'
 import { YOUR_APP_NAME, YOUR_API_KEY } from '../config'
+import { EnvButton } from '../../src/components/EnvButton'
 import { get, set } from '../utils/storage'
+import { whenFormatted } from '../utils/date'
 import './dashboard.scss'
 
-import { TryItNow } from '../../src/components/TryItNow'
-
-import { getCall } from './api'
+import { BarChart } from './../components/Chart'
+import './../components/DialogActions'
 
 function Dashboard() {
 
@@ -46,10 +49,27 @@ function Dashboard() {
 	const claimsArr = Object.entries(claims)
 	const typesArr = Object.entries(types)
 
+	claimsArr.sort(([k1, a], [k2, b]) => {
+		/// the ts from the app data is in the key, should be sorted already but here's how we could flip client side
+		if (!a.ts) a.ts = parseInt(k1.split('/')[0], 10)
+		if (!b.ts) b.ts = parseInt(k2.split('/')[0], 10)
+		return b.ts - a.ts
+	})
+
+	const data = [0, 0, 0]
+	claimsArr.forEach(([k, {nft, ld}]) => {
+		if (!nft && !ld) data[0]++;
+		if (nft) data[1]++;
+		if (ld) data[2]++;
+	})
+
 	return (
 		<Layout title="Hello">
 			<section>
 				<h2>App Details</h2>
+
+				<EnvButton />
+
 				<div className="table">
 					<div className="row">
 						<div className="cell">App Name</div>
@@ -64,28 +84,44 @@ function Dashboard() {
 						</div>
 					</div>
 				</div>
-				<button onClick={() => updateAppDetails()}>Update App Details</button>
-				<button onClick={() => setState({ isApiKeyShown: !isApiKeyShown })}>{isApiKeyShown ? 'Hide' : 'Show'} API Key</button>
-				
-				<h2>NFT Claims</h2>
-				<div className="table">
-					{
-						claimsArr.map(([k, v], i) => <div key={i} className="row">
-							<div className="cell">{k}</div>
-							<div className="cell">{JSON.stringify(v)}</div>
-						</div>)
-					}
-				</div>
+				<button className="custom-button table-of-contents__link" onClick={() => updateAppDetails()}>Update App Details</button>
+				<button className="custom-button table-of-contents__link" onClick={() => setState({ isApiKeyShown: !isApiKeyShown })}>{isApiKeyShown ? 'Hide' : 'Show'} API Key</button>
 
 				<h2>NFT Series</h2>
 				<div className="table">
 					{
 						typesArr.map(([k, v], i) => <div key={i} className="row">
 							<div className="cell">{k}</div>
-							<div className="cell">{JSON.stringify(v)}</div>
+							<div className="cell">
+								{JSON.stringify(v)}
+							</div>
 						</div>)
 					}
 				</div>
+
+				<h2>Summary</h2>
+				<BarChart data={data}/>
+
+				<h2>Claim Links</h2>
+				<div className="table">
+					{
+						claimsArr.map(([k, v], i) => {
+							const { ts } = v
+							return <div key={i} className="row">
+								<div className="cell">
+									Created: {whenFormatted(ts)}
+								</div>
+								<div className="cell">
+									{JSON.stringify(v)}
+								</div>
+							</div>
+						})
+					}
+				</div>
+
+
+
+
 			</section>
 		</Layout>
 	);

@@ -1,11 +1,12 @@
 ---
 sidebar_position: 3
 ---
-import { TryItNow } from '../../src/components/TryItNow'
+import { TryItNowWithEnv } from '../../src/components/TryItNow'
+import { Dialog } from '../../src/components/Dialog'
 
 # Create an NFT Series
 
-First you need to find out your collections contract ID. You can do that by getting a list of your collections.
+First you need to find out the `[CONTRACT_ID]` of your collection. You can do that by getting a list of your collections.
 #### Example:
 
 ```js
@@ -14,7 +15,7 @@ await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/collections`, {
 	headers: new Headers({ authorization: 'Bearer [YOUR_API_KEY]' }),
 })
 ```
-<TryItNow />
+<TryItNowWithEnv />
 
 #### Example NFT TYPE:
 
@@ -25,8 +26,8 @@ await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/type`, {
 	headers: new Headers({
 		'authorization': 'Bearer [YOUR_API_KEY]',
 		'nft-content': JSON.stringify({
-			contractId: '[COLLECTION_CONTRACT_ID]',
-			title: '[NFT_TYPE_TITLE]',
+			contractId: '[CONTRACT_ID]',
+			title: '[SERIES_TITLE]',
 			description: '[NFT_DESCRIPTION]',
 			copies: [NUMBER_OF_COPIES],
 		})
@@ -34,4 +35,5 @@ await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/type`, {
 	body: await fetch('[IMAGE_URL]').then(r => r.arrayBuffer())
 })
 ```
-<TryItNow />
+<TryItNowWithEnv />
+<Dialog />
