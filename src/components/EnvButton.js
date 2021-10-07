@@ -5,6 +5,10 @@ const ENVS = {
 	testnet: 'mainnet',
 	mainnet: 'dev'
 }
+
+if (typeof window === 'undefined') {
+    window = {}
+}
 window.ENV = 'dev'
 
 export const EnvButton = () => {

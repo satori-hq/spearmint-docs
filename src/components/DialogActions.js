@@ -1,4 +1,8 @@
 
+if (typeof window === 'undefined') {
+    window = {}
+}
+
 if (!window.SET_DIALOG_ACTIONS) {
 	window.SET_DIALOG_ACTIONS = true
 

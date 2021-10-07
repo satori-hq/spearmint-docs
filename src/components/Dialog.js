@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import Close from '../../static/img/close.svg';
 import './Dialog.scss'
-import BrowserOnly from '@docusaurus/BrowserOnly';
 
-export const Dialog = () => <BrowserOnly><DialogInner /></BrowserOnly>
+if (typeof window === 'undefined') {
+    window = {}
+}
+window.DIALOG = {}
 
-export const DialogInner = () => {
+export const Dialog = () => {
 
-	window.DIALOG = {}
 	let interval, _state = {}, inputs = []
 
 	const [state, setState] = useState(window.DIALOG || {})
