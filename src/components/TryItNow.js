@@ -1,6 +1,6 @@
 import React from 'react';
 import { EnvButton } from './EnvButton'
-import { Dialog } from './Dialog'
+import BrowserOnly from '@docusaurus/BrowserOnly';
 
 import './DialogActions'
 
@@ -67,7 +67,7 @@ export const TryItNow = () => {
 }
 
 /// TryItNow has to be first
-export const TryItNowWithEnv = () => <>
+export const TryItNowWithEnv = () => <BrowserOnly>
 	<TryItNow />
 	<EnvButton />
-</>
+</BrowserOnly>

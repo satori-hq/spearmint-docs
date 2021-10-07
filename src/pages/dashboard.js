@@ -50,12 +50,12 @@ function Dashboard() {
 	const typesArr = Object.entries(types)
 
 	claimsArr.sort(([k1, a], [k2, b]) => {
-		/// the ts from the app data is in the key, should be sorted already but here's how we could flip client side
 		if (!a.ts) a.ts = parseInt(k1.split('/')[0], 10)
 		if (!b.ts) b.ts = parseInt(k2.split('/')[0], 10)
 		return b.ts - a.ts
 	})
 
+	/// TODO in API
 	const data = [0, 0, 0]
 	claimsArr.forEach(([k, {nft, ld}]) => {
 		if (!nft && !ld) data[0]++;
@@ -105,7 +105,7 @@ function Dashboard() {
 				<h2>Claim Links</h2>
 				<div className="table">
 					{
-						claimsArr.map(([k, v], i) => {
+						claimsArr.slice(0, 100).map(([k, v], i) => {
 							const { ts } = v
 							return <div key={i} className="row">
 								<div className="cell">
