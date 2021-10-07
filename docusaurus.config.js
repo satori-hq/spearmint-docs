@@ -15,7 +15,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 	projectName: 'docusaurus', // Usually your repo name.
 
 	plugins: [
-		'docusaurus-plugin-sass', 
+		'docusaurus-plugin-sass',
 	],
 
 	presets: [
