@@ -46,8 +46,13 @@ function Dashboard() {
 		isApiKeyShown, appName, apiKey,
 		claims, types,
 	} = state
-	const claimsArr = Object.entries(claims)
-	const typesArr = Object.entries(types)
+
+	let claimsArr = Object.entries(claims)
+	let typesArr = Object.entries(types)
+	if (types.error || claims.error) {
+		typesArr = []
+		claimsArr = []
+	}
 
 	claimsArr.sort(([k1, a], [k2, b]) => {
 		if (!a.ts) a.ts = parseInt(k1.split('/')[0], 10)
