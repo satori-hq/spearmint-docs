@@ -3,6 +3,10 @@ import { EnvButton } from './EnvButton'
 
 import './DialogActions'
 
+const allowNoInput = [
+	'[NFT_DESCRIPTION]'
+]
+
 export const TryItNow = () => {
 	return <button className="custom-button table-of-contents__link" onClick={async ({ target }) => {
 
@@ -31,7 +35,7 @@ export const TryItNow = () => {
 						}
 				}
 				if (!input) input = await window.prompt(match)
-				if (!input) throw 'return'
+				if (!input && !allowNoInput.includes(match)) throw 'return'
 				switch (match) {
 					case '[YOUR_APP_NAME]':
 					case '[YOUR_API_KEY]':
