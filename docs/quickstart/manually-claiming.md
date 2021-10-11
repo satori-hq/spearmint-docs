@@ -1,5 +1,5 @@
 ---
-sidebar_position: 5
+sidebar_position: 6
 ---
 import { TryItNowWithEnv } from '../../src/components/TryItNow'
 import { Dialog } from '../../src/components/Dialog'
