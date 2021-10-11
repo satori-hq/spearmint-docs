@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import BrowserOnly from '@docusaurus/BrowserOnly';
+import { get, set } from '../utils/storage'
 
 const ENVS = {
 	dev: 'testnet',
@@ -8,10 +9,13 @@ const ENVS = {
 	mainnet: 'dev'
 }
 
+const ENV_KEY = '__ENV_KEY'
+
 export const EnvButtonInner = () => {
 	
 	if (!window.ENV) {
-		window.ENV = 'dev'
+		const ENV = get(ENV_KEY, null) || 'dev'
+		window.ENV = ENV
 	}
 	let interval, _env = 'dev'
 	
@@ -23,6 +27,7 @@ export const EnvButtonInner = () => {
 			if (window.ENV !== _env) {
 				_env = window.ENV
 				setEnv(_env)
+				set(ENV_KEY, _env)
 			}
 		}, 50)
 		return () => {
