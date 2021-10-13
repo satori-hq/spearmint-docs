@@ -29,8 +29,8 @@
 	height: 64px;
 }
 
-html[data-theme='dark'] {
-	--ifm-color-success-contrast-background: #1B2A24;
+.features_src-components-HomepageFeatures-module {
+	margin: 0;
 }
 
 .docusaurus-highlight-code-line {
@@ -40,15 +40,8 @@ html[data-theme='dark'] {
   padding: 0 var(--ifm-pre-padding);
 }
 
-html[data-theme='dark'] .docusaurus-highlight-code-line {
-  background-color: rgba(0, 0, 0, 0.3);
-}
-
 code {
 	background-color: var(--ifm-color-primary-lighter);
-}
-html[data-theme='dark'] code {
-	background-color: var(--ifm-color-primary-darkest);
 }
 
 .custom-button {
@@ -62,4 +55,30 @@ html[data-theme='dark'] code {
 .custom-button:hover {
 	color: white;
 	background: var(--ifm-color-primary);
+}
+
+.custom-button:disabled {
+	cursor: auto;
+	color: var(--ifm-color-primary-lighter);
+	border-color: var(--ifm-color-primary-lighter);
+	&:hover {
+		background: white;
+	}
+}
+
+html[data-theme='dark'] {
+	--ifm-color-success-contrast-background: #1B2A24;
+	code {
+		background-color: var(--ifm-color-primary-darkest);
+	}
+	.docusaurus-highlight-code-line {
+		background-color: rgba(0, 0, 0, 0.3);
+	}
+	.custom-button {
+		color: black;
+	}
+	.custom-button:disabled {
+		color: var(--ifm-color-primary-lighter);
+		border-color: var(--ifm-color-primary-lighter);
+	}
 }

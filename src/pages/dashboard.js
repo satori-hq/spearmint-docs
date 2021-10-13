@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Layout from '@theme/Layout';
 
+import { AppProvider, appStore } from './../state/app';
 import { getCall } from '../utils/api'
 import { YOUR_APP_NAME, YOUR_API_KEY } from '../config'
-import { EnvButton } from '../../src/components/EnvButton'
+import { TryItNowWithEnv } from '../../src/components/TryItNow'
 import { get, set } from '../utils/storage'
 import { whenFormatted } from '../utils/date'
 import './dashboard.scss'
@@ -11,7 +12,8 @@ import './dashboard.scss'
 import { BarChart } from './../components/Chart'
 import './../components/DialogActions'
 
-function Dashboard() {
+function DashboardInner() {
+	const { state: { app: { env } } } = useContext(appStore)
 
 	const [state, _setState] = useState({
 		isApiKeyShown: false,
@@ -31,8 +33,8 @@ function Dashboard() {
 	useEffect(init, [])
 
 	const loadState = async ({ appName, apiKey }) => {
-		setState({ types: await getCall({ appName, apiKey, path: 'types' }) })
-		setState({ claims: await getCall({ appName, apiKey, path: 'claims' }) })
+		setState({ types: await getCall({ env, appName, apiKey, path: 'types' }) })
+		setState({ claims: await getCall({ env, appName, apiKey, path: 'claims' }) })
 	}
 
 	const updateAppDetails = () => {
@@ -62,7 +64,7 @@ function Dashboard() {
 
 	/// TODO in API
 	const data = [0, 0, 0]
-	claimsArr.forEach(([k, {nft, ld}]) => {
+	claimsArr.forEach(([k, { nft, ld }]) => {
 		if (!nft && !ld) data[0]++;
 		if (nft) data[1]++;
 		if (ld) data[2]++;
@@ -73,7 +75,7 @@ function Dashboard() {
 			<section>
 				<h2>App Details</h2>
 
-				<EnvButton />
+				<TryItNowWithEnv contextProvided={true} />
 
 				<div className="table">
 					<div className="row">
@@ -105,7 +107,7 @@ function Dashboard() {
 				</div>
 
 				<h2>Summary</h2>
-				<BarChart data={data}/>
+				<BarChart data={data} />
 
 				<h2>Claim Links</h2>
 				<div className="table">
@@ -132,4 +134,10 @@ function Dashboard() {
 	);
 }
 
-export default Dashboard;
+const Dashboard = () => {
+	return <AppProvider>
+		<DashboardInner />
+	</AppProvider>
+};
+
+export default Dashboard
