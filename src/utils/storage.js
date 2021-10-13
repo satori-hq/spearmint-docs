@@ -1,7 +1,8 @@
 export const get = (k, d = {}) => {
 	let v = localStorage.getItem(k);
 	if (typeof d !== 'object') {
-		return v;
+		if (v === 'undefined' || v === 'null') v = d
+		return v || d;
 	}
 	try {
 		return JSON.parse(v || JSON.stringify(d));

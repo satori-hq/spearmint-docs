@@ -3,20 +3,14 @@ import React, { useEffect, useState, useContext } from 'react';
 import { get, set } from '../utils/storage'
 import { appStore, onAppMount } from './../state/app';
 
-const ENVS = {
-	dev: 'testnet',
-	testnet: 'mainnet',
-	mainnet: 'dev'
-}
-
 const ENV_KEY = '__ENV_KEY'
 
-export const EnvButton = () => {
-	const { dispatch, update, state: { app: { env } } } = useContext(appStore)
+export const Keys = () => {
+	const { dispatch, update, state: { app: { env, keys } } } = useContext(appStore)
 
 	useEffect(() => {
 		dispatch(onAppMount())
-		update('app.env', get(ENV_KEY, 'testnet'))
+		update('app.env', get(ENV_KEY, 'dev'))
 	}, [])
 
 	return <button

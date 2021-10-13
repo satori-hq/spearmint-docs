@@ -78,8 +78,8 @@ export const TryItNow = () => {
 
 /// TryItNow has to be first
 export const TryItNowWithEnv = ({
-	contextProvided = false,
-}) => contextProvided ? <EnvButton /> : <AppProvider>
+	hasProvider = false,
+}) => hasProvider ? <EnvButton /> : <AppProvider>
 <TryItNow />
 <EnvButton />
 </AppProvider>

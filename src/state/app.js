@@ -5,6 +5,7 @@ const initialState = {
 	app: {
 		mounted: false,
 		env: 'testnet',
+		keys: {}
 	},
 };
 

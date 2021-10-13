@@ -13,7 +13,7 @@ import { BarChart } from './../components/Chart'
 import './../components/DialogActions'
 
 function DashboardInner() {
-	const { state: { app: { env } } } = useContext(appStore)
+	const { state: { app: { env, keys } } } = useContext(appStore)
 
 	const [state, _setState] = useState({
 		isApiKeyShown: false,
@@ -75,7 +75,7 @@ function DashboardInner() {
 			<section>
 				<h2>App Details</h2>
 
-				<TryItNowWithEnv contextProvided={true} />
+				<TryItNowWithEnv hasProvider={true} />
 
 				<div className="table">
 					<div className="row">
@@ -125,9 +125,6 @@ function DashboardInner() {
 						})
 					}
 				</div>
-
-
-
 
 			</section>
 		</Layout>
