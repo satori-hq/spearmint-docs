@@ -6,14 +6,14 @@ import { Dialog } from '../../src/components/Dialog'
 
 # Register
 
-In order to start with Spearmint you'll need to register yourself and your app name.
+In order to start with Spearmint you'll need to register with your email and choose an app name.
 
 :::tip
-
 Anything in all caps and marked with square brackets will need to be replaced by you.
 
 e.g. `[REPLACE_ME]`
 
+`[API_ORIGIN]` corresponds to the Network button below and is auto filled.
 :::
 
 You will be emailed your api key and an activation link.

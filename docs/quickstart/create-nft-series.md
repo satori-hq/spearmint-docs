@@ -6,6 +6,8 @@ import { Dialog } from '../../src/components/Dialog'
 
 # Create an NFT Series
 
+This is your NFT "definition". It will define what your NFT is and the media that it represents.
+
 First you need to find out the `[CONTRACT_ID]` of your collection. You can do that by getting a list of your collections.
 #### Example:
 

@@ -4,7 +4,7 @@ sidebar_position: 4
 import { TryItNowWithEnv } from '../../src/components/TryItNow'
 import { Dialog } from '../../src/components/Dialog'
 
-# Create Claim Link
+# Create Claim Links
 
 First you need your NFT Series ID. You can get a list below.
 
