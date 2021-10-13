@@ -13,8 +13,6 @@ export const TryItNow = ({ requiresKeys }) => {
 	const { state: { app: { env, keys } } } = useContext(appStore)
 	const key = keys[env]?.__selected
 
-	console.log(requiresKeys)
-
 	return <button
 		className="custom-button table-of-contents__link"
 		disabled={(!key && requiresKeys) || (env === 'mainnet' && !/ENV=mainnet/.test(window.location.href))}
