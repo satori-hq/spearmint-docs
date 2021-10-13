@@ -1,13 +1,12 @@
 import React, { useEffect, useState, useContext } from 'react';
 
-import BrowserOnly from '@docusaurus/BrowserOnly';
 import { get, set } from '../utils/storage'
-import { appStore, onAppMount, isDeployed } from './../state/app';
+import { appStore, onAppMount } from './../state/app';
 
 const ENVS = {
 	dev: 'testnet',
 	testnet: 'mainnet',
-	mainnet: isDeployed ? 'testnet' : 'dev'
+	mainnet: 'dev'
 }
 
 const ENV_KEY = '__ENV_KEY'
@@ -23,7 +22,8 @@ export const EnvButton = () => {
 	return <button
 		className="custom-button table-of-contents__link"
 		onClick={() => {
-			const nextEnv = ENVS[env]
+			let nextEnv = ENVS[env]
+			if (nextEnv === 'dev' &&  window.location.href.indexOf('spearmint') > -1) nextEnv = 'testnet'
 			update('app.env', nextEnv)
 			set(ENV_KEY, nextEnv)
 		}}

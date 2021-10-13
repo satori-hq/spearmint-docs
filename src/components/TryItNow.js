@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { EnvButton } from './EnvButton'
 import { AppProvider, appStore, onAppMount } from './../state/app';
+import BrowserOnly from '@docusaurus/BrowserOnly';
 
 import './DialogActions'
 
@@ -82,4 +83,3 @@ export const TryItNowWithEnv = ({
 <TryItNow />
 <EnvButton />
 </AppProvider>
-

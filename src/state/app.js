@@ -8,8 +8,6 @@ const initialState = {
 	},
 };
 
-export const isDeployed = window.location.href.indexOf('spearmint') > -1
-
 export const { appStore, AppProvider } = State(initialState, 'app');
 
 export const onAppMount = () => async ({ update, getState, dispatch }) => {
