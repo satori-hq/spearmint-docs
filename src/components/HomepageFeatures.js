@@ -8,12 +8,12 @@ const FeatureList = [
 		Svg: require('../../static/img/spearmint.svg').default,
 		description: (
 			<>
-				Spearmint is easy to get registered as an app on our testnet and get started for FREE. Try it <a href="/docs/intro">right now</a>.
+				Spearmint makes it easy to register an app on testnet and start building for free! Try it <a href="/docs/intro">right now</a>.
 			</>
 		),
 	},
 	{
-		title: 'Focus on What Matters',
+		title: 'Focus on Building',
 		Img: require('../../static/img/sakura.png').default,
 		description: (
 			<>
@@ -26,7 +26,7 @@ const FeatureList = [
 		Svg: require('../../static/img/near_logo.svg').default,
 		description: (
 			<>
-				Get the best speed, security and UX for your users, with some of the lowest minting costs.
+				Deliver the best speed, security, and UX for your users, with some of the lowest minting costs in all of crypto.
 			</>
 		),
 	},
