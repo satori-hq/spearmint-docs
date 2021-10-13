@@ -15,7 +15,7 @@ export const TryItNow = () => {
 
 	return <button
 		className="custom-button table-of-contents__link"
-		disabled={!key || env === 'mainnet'}
+		disabled={!key || (env === 'mainnet' && !/ENV=mainnet/.test(window.location.href))}
 		onClick={async ({ target }) => {
 
 			const { appName, apiKey } = key
