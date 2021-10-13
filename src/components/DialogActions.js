@@ -43,6 +43,22 @@ if (!window.SET_DIALOG_ACTIONS) {
 				]
 			}
 		})
+		// if (!regex.test(singleResult)) {
+		// 	window.alert()
+		// }
 		return singleResult.trim()
+	}
+
+	window.select = async (msg, choices) => {
+		await resetDialog()
+		const result = await new Promise((resolve, reject) => {
+			window.DIALOG = {
+				msg,
+				resolve,
+				reject,
+				choices
+			}
+		})
+		return result
 	}
 }

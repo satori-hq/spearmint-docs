@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 
 import { get, set } from '../utils/storage'
-import { appStore, onAppMount } from './../state/app';
+import { appStore } from './../state/app';
 
 const ENVS = {
 	dev: 'testnet',
@@ -15,7 +15,6 @@ export const EnvButton = () => {
 	const { dispatch, update, state: { app: { env } } } = useContext(appStore)
 
 	useEffect(() => {
-		dispatch(onAppMount())
 		update('app.env', get(ENV_KEY, 'testnet'))
 	}, [])
 

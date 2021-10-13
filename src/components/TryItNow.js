@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { EnvButton } from './EnvButton'
-import { AppProvider, appStore, onAppMount } from './../state/app';
-import BrowserOnly from '@docusaurus/BrowserOnly';
+import { Keys } from './Keys'
+import { appStore } from './../state/app';
 
 import './DialogActions'
 
@@ -10,12 +10,15 @@ const allowNoInput = [
 ]
 
 export const TryItNow = () => {
-	const { state: { app: { env } } } = useContext(appStore)
+	const { state: { app: { env, keys } } } = useContext(appStore)
+	const key = keys.getKey()
 
 	return <button
 		className="custom-button table-of-contents__link"
-		disabled={env === 'mainnet'}
+		disabled={!key || env === 'mainnet'}
 		onClick={async ({ target }) => {
+
+			const { appName, apiKey } = key
 
 			if (document.querySelector('section.modal')) {
 				return
@@ -27,29 +30,18 @@ export const TryItNow = () => {
 
 				for (let i = 0; i < matches.length; i++) {
 					const match = matches[i]
-					const key = match + '-' + env
-					let input, fromStorage = false
+					let input
 					switch (match) {
 						case '[API_ORIGIN]':
 							code = code.replace(match, `https://spearmint-${env}.near.workers.dev`);
 							continue;
-						case '[YOUR_APP_NAME]':
-						case '[YOUR_API_KEY]':
-							const item = localStorage.getItem(key)
-							if (item && await window.confirm(`Use "${item}" as ${key}?`)) {
-								input = item
-								fromStorage = true
-							}
+						case '[YOUR_APP_NAME]': input = appName
+						break;
+						case '[YOUR_API_KEY]': input = apiKey
+						break;
 					}
 					if (!input) input = await window.prompt(match)
 					if (!input && !allowNoInput.includes(match)) throw 'return'
-					switch (match) {
-						case '[YOUR_APP_NAME]':
-						case '[YOUR_API_KEY]':
-							if (!fromStorage && await window.confirm(`Save "${input}" as ${key}?`)) {
-								localStorage.setItem(key, input)
-							}
-					}
 					code = code.replace(match, input)
 				}
 
@@ -77,9 +69,8 @@ export const TryItNow = () => {
 }
 
 /// TryItNow has to be first
-export const TryItNowWithEnv = ({
-	hasProvider = false,
-}) => hasProvider ? <EnvButton /> : <AppProvider>
-<TryItNow />
-<EnvButton />
-</AppProvider>
+export const TryItNowWithEnv = ({ hideKeys = false }) => <>
+	<TryItNow />
+	{ !hideKeys && <Keys /> }
+	<EnvButton />
+</>

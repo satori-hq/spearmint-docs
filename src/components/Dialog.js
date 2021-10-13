@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import Close from '../../static/img/close.svg';
 import './Dialog.scss'
 
-if (typeof window === 'undefined') {
-    window = {}
-}
-window.DIALOG = {}
 
 export const Dialog = () => {
-
+	if (typeof window === 'undefined') {
+		window = { DIALOG: {} }
+	} else if (!window.DIALOG) {
+		window.DIALOG = {}
+	}
+	
 	let interval, _state = {}, inputs = []
 
 	const [state, setState] = useState(window.DIALOG || {})

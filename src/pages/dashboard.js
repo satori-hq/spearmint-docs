@@ -1,51 +1,36 @@
 import React, { useEffect, useState, useContext } from 'react';
 import Layout from '@theme/Layout';
 
-import { AppProvider, appStore } from './../state/app';
+import { appStore } from './../state/app';
 import { getCall } from '../utils/api'
-import { YOUR_APP_NAME, YOUR_API_KEY } from '../config'
-import { TryItNowWithEnv } from '../../src/components/TryItNow'
-import { get, set } from '../utils/storage'
+import { EnvButton } from '../../src/components/EnvButton'
+import { Keys } from '../../src/components/Keys'
+import { Dialog } from '../../src/components/Dialog'
 import { whenFormatted } from '../utils/date'
 import './dashboard.scss'
 
 import { BarChart } from './../components/Chart'
 import './../components/DialogActions'
 
-function DashboardInner() {
+function Dashboard() {
 	const { state: { app: { env, keys } } } = useContext(appStore)
+	const key = keys.getKey()
 
 	const [state, _setState] = useState({
-		isApiKeyShown: false,
-		appName: '',
-		apiKey: '',
 		types: {},
 		claims: {},
 	})
 	const setState = (newState) => _setState((state) => ({ ...state, ...newState }))
 
-	const init = async () => {
-		const appName = get(YOUR_APP_NAME)
-		const apiKey = get(YOUR_API_KEY)
-		setState({ appName, apiKey })
-		loadState({ appName, apiKey })
-	}
-	useEffect(init, [])
-
-	const loadState = async ({ appName, apiKey }) => {
+	const loadState = async () => {
+		if (!key) return
+		const { appName, apiKey } = key
 		setState({ types: await getCall({ env, appName, apiKey, path: 'types' }) })
 		setState({ claims: await getCall({ env, appName, apiKey, path: 'claims' }) })
 	}
-
-	const updateAppDetails = () => {
-		const { appName, apiKey } = state
-		set(YOUR_APP_NAME, appName)
-		set(YOUR_API_KEY, apiKey)
-		loadState({ appName, apiKey })
-	}
+	useEffect(loadState, [])
 
 	const {
-		isApiKeyShown, appName, apiKey,
 		claims, types,
 	} = state
 
@@ -70,29 +55,17 @@ function DashboardInner() {
 		if (ld) data[2]++;
 	})
 
+
 	return (
 		<Layout title="Hello">
 			<section>
 				<h2>App Details</h2>
 
-				<TryItNowWithEnv hasProvider={true} />
+				<Keys />
+				<EnvButton />
+				<Dialog />
 
-				<div className="table">
-					<div className="row">
-						<div className="cell">App Name</div>
-						<div className="cell padding-0">
-							<input value={appName} onChange={(e) => setState({ appName: e.target.value })} />
-						</div>
-					</div>
-					<div className="row">
-						<div className="cell">Api Key</div>
-						<div className="cell padding-0">
-							<input type={isApiKeyShown ? 'text' : 'password'} value={apiKey} onChange={(e) => setState({ apiKey: e.target.value })} />
-						</div>
-					</div>
-				</div>
-				<button className="custom-button table-of-contents__link" onClick={() => updateAppDetails()}>Update App Details</button>
-				<button className="custom-button table-of-contents__link" onClick={() => setState({ isApiKeyShown: !isApiKeyShown })}>{isApiKeyShown ? 'Hide' : 'Show'} API Key</button>
+				<button disabled={!key} className="custom-button table-of-contents__link" onClick={loadState}>Refresh</button>
 
 				<h2>NFT Series</h2>
 				<div className="table">
@@ -130,11 +103,5 @@ function DashboardInner() {
 		</Layout>
 	);
 }
-
-const Dashboard = () => {
-	return <AppProvider>
-		<DashboardInner />
-	</AppProvider>
-};
 
 export default Dashboard
