@@ -4,7 +4,7 @@ import { State } from '../utils/state';
 const initialState = {
 	app: {
 		mounted: false,
-		env: 'dev',
+		env: 'testnet',
 	},
 };
 
