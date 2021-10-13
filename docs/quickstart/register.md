@@ -31,5 +31,5 @@ await fetch(`[API_ORIGIN]/v1/api/[YOUR_DESIRED_APP_NAME]/register`, {
 	})
 })
 ```
-<TryItNowWithEnv hideKeys={true} />
+<TryItNowWithEnv requiresKeys={false} />
 <Dialog />

@@ -9,16 +9,18 @@ const allowNoInput = [
 	'[NFT_DESCRIPTION]'
 ]
 
-export const TryItNow = () => {
+export const TryItNow = ({ requiresKeys }) => {
 	const { state: { app: { env, keys } } } = useContext(appStore)
 	const key = keys[env]?.__selected
 
+	console.log(requiresKeys)
+
 	return <button
 		className="custom-button table-of-contents__link"
-		disabled={!key || (env === 'mainnet' && !/ENV=mainnet/.test(window.location.href))}
+		disabled={(!key && requiresKeys) || (env === 'mainnet' && !/ENV=mainnet/.test(window.location.href))}
 		onClick={async ({ target }) => {
 
-			const { appName, apiKey } = key
+			const { appName, apiKey } = requiresKeys ? key : {}
 
 			if (document.querySelector('section.modal')) {
 				return
@@ -69,8 +71,8 @@ export const TryItNow = () => {
 }
 
 /// TryItNow has to be first
-export const TryItNowWithEnv = ({ hideKeys = false }) => <>
-	<TryItNow />
-	{ !hideKeys && <Keys /> }
+export const TryItNowWithEnv = ({ requiresKeys = true }) => <>
+	<TryItNow {...{requiresKeys}} />
+	{ requiresKeys && <Keys /> }
 	<EnvButton />
 </>
