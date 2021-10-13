@@ -8,15 +8,12 @@ const KEYS_KEY = '__KEYS_KEY'
 export const Keys = () => {
 	const { dispatch, update, state: { app: { env, keys } } } = useContext(appStore)
 	const keysEnv = keys[env] || {}
-
+	
 	useEffect(() => {
-		update('app.keys', get(KEYS_KEY))
+		update('app.keys', {
+			...get(KEYS_KEY),
+		})
 	}, [])
-
-	const getKey = () => keysEnv.__selected ? { appName: [keysEnv.__selected], apiKey: keysEnv[keysEnv.__selected] } : null
-	useEffect(() => {
-		update('app.keys', { getKey })
-	}, [keysEnv])
 
 	return <>
 		<button
@@ -32,13 +29,21 @@ export const Keys = () => {
 						const appName = await window.prompt('App Name for Key?');
 						const apiKey = await window.prompt('Api Key for ' + appName + '?');
 						keysEnv[appName] = apiKey
-						set(KEYS_KEY, { ...keys, [env]: keysEnv })
+						keysEnv.__selected = { appName, apiKey }
+						const newKeys = { ...keys, [env]: keysEnv }
+						set(KEYS_KEY, newKeys)
+						update('app.keys', newKeys)
 						return
 					}
 					case 'Remove': {
 						const appName = await window.prompt('Remove key for what app name?');
 						delete keysEnv[appName]
-						set(KEYS_KEY, { ...keys, [env]: keysEnv })
+						if (keysEnv.__selected.appName === appName) {
+							keysEnv.__selected = null
+						}
+						const newKeys = { ...keys, [env]: keysEnv }
+						set(KEYS_KEY, newKeys)
+						update('app.keys', newKeys)
 						return
 					}
 					default: {
@@ -46,12 +51,14 @@ export const Keys = () => {
 						if (!keysEnv[appName]) {
 							return window.alert('App does not exist')
 						}
-						keysEnv.__selected = appName
-						set(KEYS_KEY, { ...keys, [env]: keysEnv })
+						keysEnv.__selected = { appName, apiKey: keysEnv[keysEnv.__selected.appName] }
+						const newKeys = { ...keys, [env]: keysEnv }
+						set(KEYS_KEY, newKeys)
+						update('app.keys', newKeys)
 						return
 					}
 				}
 			}}
-		>{ keysEnv.__selected ? 'App: ' + keysEnv.__selected : 'No App Selected' }</button>
+		>{ keysEnv.__selected ? 'App: ' + keysEnv.__selected.appName : 'No App Selected' }</button>
 	</>
 }

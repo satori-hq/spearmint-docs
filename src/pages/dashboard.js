@@ -14,7 +14,9 @@ import './../components/DialogActions'
 
 function Dashboard() {
 	const { state: { app: { env, keys } } } = useContext(appStore)
-	const key = keys.getKey()
+	const key = keys[env]?.__selected
+
+	console.log(key)
 
 	const [state, _setState] = useState({
 		types: {},

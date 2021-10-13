@@ -11,7 +11,7 @@ const allowNoInput = [
 
 export const TryItNow = () => {
 	const { state: { app: { env, keys } } } = useContext(appStore)
-	const key = keys.getKey()
+	const key = keys[env]?.__selected
 
 	return <button
 		className="custom-button table-of-contents__link"
