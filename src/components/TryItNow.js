@@ -25,7 +25,8 @@ export const TryItNow = ({ requiresKeys }) => {
 			}
 
 			let code = target.previousSibling.textContent;
-			const matches = code.match(/\[.*?\]/gi);
+			const matches = code.match(/\[.*?\]/gi).filter((m) => m.length > 2);
+
 			try {
 
 				for (let i = 0; i < matches.length; i++) {
@@ -46,20 +47,20 @@ export const TryItNow = ({ requiresKeys }) => {
 				}
 
 				eval(`(async () => {
-				const res = ${code.substr(0, code.length - 4)};
-				let ret
-				if (!res.ok) {
-					ret = await res.text()
-				} else {
-					ret = await res.json()
-				}
-				console.log(ret)
-				ret = JSON.stringify(ret)
-				if (ret.length > 512) {
-					return alert('Response too large. Outputted to JS console.')
-				}
-				alert(ret)
-			})()`);
+					const res = ${code.substr(0, code.length - 4)};
+					let ret
+					switch (res.ok) {
+						case true: ret = await res.json(); break;
+						case false: ret = await res.text(); break;
+						case undefined: ret = res; break;
+					}
+					console.log(ret)
+					ret = JSON.stringify(ret)
+					if (ret.length > 512) {
+						return alert('Response too large. Outputted to JS console.')
+					}
+					alert(ret)
+				})()`);
 			} catch (e) {
 				return
 			}

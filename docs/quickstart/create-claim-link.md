@@ -36,5 +36,30 @@ await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/claim`, {
 ```
 <TryItNowWithEnv />
 
+## Create Many Links
+
+You can batch call the api and concatenate the results, outputting the final result to the console.
+
+#### Example:
+
+The TryItNow runner is expecting the results of an async function call so wrap in anon self calling async call.
+
+```js
+await (async () => {
+	const results = await Promise.all(Array.from(Array([NUM_BATCHES])).map(
+		async () => await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/claim`, {
+			method: 'POST',
+			headers: new Headers({ authorization: 'Bearer [YOUR_API_KEY]' }),
+			body: JSON.stringify({
+				seriesId: '[SERIES_ID]',
+				amount: [NUMBER_OF_LINKS]
+			})
+		}).then((result) => result.json())
+	));
+	return results.reduce((a, c) => a.concat(c), []);
+})()
+```
+<TryItNowWithEnv />
+
 
 <Dialog />
