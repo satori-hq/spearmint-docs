@@ -1,0 +1,4 @@
+let a = document.createElement("a");
+ a.href = 'data:text/csv;charset=utf-8,' + temp1.map((link) => encodeURIComponent(link)).join('\n')
+ a.download = "links.csv"
+ a.click();

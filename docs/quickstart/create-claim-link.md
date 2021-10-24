@@ -42,24 +42,25 @@ You can batch call the api and concatenate the results, outputting the final res
 
 #### Example:
 
-The TryItNow runner is expecting the results of an async function call so wrap in anon self calling async call.
+The TryItNow runner is expecting the results of an async function call. Here we wrap the output in an anon async function that calls itself. Inside the function we call the api several times, await each response one at a time (don't flood the api please) and then concatenate all the links from each response after the loop
 
 ```js
 await (async () => {
-	const results = await Promise.all(Array.from(Array([NUM_BATCHES])).map(
-		async () => await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/claim`, {
+	const results = [];
+	const numBatches = parseInt([NUM_BATCHES]);
+	for (let i = 0; i < numBatches; i++) {
+		results.push(await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/claim`, {
 			method: 'POST',
 			headers: new Headers({ authorization: 'Bearer [YOUR_API_KEY]' }),
 			body: JSON.stringify({
 				seriesId: '[SERIES_ID]',
 				amount: [NUMBER_OF_LINKS]
 			})
-		}).then((result) => result.json())
-	));
+		}).then((result) => result.json()));
+	}
 	return results.reduce((a, c) => a.concat(c), []);
 })()
 ```
 <TryItNowWithEnv />
-
 
 <Dialog />
