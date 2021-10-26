@@ -5,7 +5,7 @@ import styles from './HomepageFeatures.module.css';
 const FeatureList = [
 	{
 		title: 'Easy to Use',
-		Svg: require('../../static/img/spearmint.svg').default,
+		Svg: require('../../static/img/spearmint-easy.svg').default,
 		description: (
 			<>
 				Spearmint makes it easy to register an app on testnet and start building for free! Try it <a href="/docs/intro">right now</a>.
@@ -23,7 +23,7 @@ const FeatureList = [
 	},
 	{
 		title: 'Powered by NEAR',
-		Svg: require('../../static/img/near_logo.svg').default,
+		Svg: require('../../static/img/spearmint-near.svg').default,
 		description: (
 			<>
 				Deliver the best speed, security, and UX for your users, with some of the lowest minting costs in all of crypto.
