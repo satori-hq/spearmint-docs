@@ -9,7 +9,17 @@ import { Dialog } from '../../src/components/Dialog'
 This is your NFT "definition". It will define what your NFT is and the media that it represents.
 
 First you need to find out the `[CONTRACT_ID]` of your collection. You can do that by getting a list of your collections.
+
+The list of collections will return keys and values. The `[CONTRACT_ID]` is the key for your collection data.
+
+
 #### Example:
+```js
+{"jeff-handout-test.snft.testnet":{"title":"Jeff Handout Test","ts":1637199109816}}
+// The collection's contract ID is: jeff-handout-test.snft.testnet
+```
+
+#### Getting Collections:
 
 ```js
 await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/collections`, {
@@ -19,7 +29,7 @@ await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/collections`, {
 ```
 <TryItNowWithEnv />
 
-#### Example NFT TYPE:
+#### Creating an NFT Series:
 
 ```js
 

@@ -48,10 +48,13 @@ export const Keys = () => {
 					}
 					default: {
 						const appName = selected.split('App: ')[1]
+
+						console.log(appName, keysEnv[appName])
+
 						if (!keysEnv[appName]) {
 							return window.alert('App does not exist')
 						}
-						keysEnv.__selected = { appName, apiKey: keysEnv[keysEnv.__selected.appName] }
+						keysEnv.__selected = { appName, apiKey: keysEnv[appName] }
 						const newKeys = { ...keys, [env]: keysEnv }
 						set(KEYS_KEY, newKeys)
 						update('app.keys', newKeys)
