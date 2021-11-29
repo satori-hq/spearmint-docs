@@ -10,6 +10,7 @@ const allowNoInput = [
 ]
 
 export const TryItNow = ({ requiresKeys }) => {
+
 	const { state: { app: { env, keys } } } = useContext(appStore)
 	const key = keys[env]?.__selected
 
@@ -25,6 +26,7 @@ export const TryItNow = ({ requiresKeys }) => {
 			}
 
 			let code = target.previousSibling.textContent;
+
 			const matches = code.match(/\[.*?\]/gi).filter((m) => m.length > 2);
 
 			try {
@@ -44,6 +46,10 @@ export const TryItNow = ({ requiresKeys }) => {
 					if (!input) input = await window.prompt(match)
 					if (!input && !allowNoInput.includes(match)) throw 'return'
 					code = code.replace(match, input)
+
+
+
+					console.log('code', code)
 				}
 
 				eval(`(async () => {

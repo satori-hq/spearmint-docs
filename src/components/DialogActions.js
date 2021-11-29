@@ -46,6 +46,7 @@ if (!window.SET_DIALOG_ACTIONS) {
 		// if (!regex.test(singleResult)) {
 		// 	window.alert()
 		// }
+
 		return singleResult.trim()
 	}
 
