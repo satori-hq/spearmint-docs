@@ -24,10 +24,10 @@ You have 2 minutes to activate your app.
 
 ```js
 await fetch(`[API_ORIGIN]/v1/api/[YOUR_DESIRED_APP_NAME]/register`, {
-	method: 'POST',
-    headers: new Headers({ 'Referrer-Policy': 'no-referrer' }),
+	method: `POST`,
+    headers: new Headers({ 'Referrer-Policy': `no-referrer` }),
 	body: JSON.stringify({
-		email: '[YOUR_EMAIL]'
+		email: `[YOUR_EMAIL]`
 	})
 })
 ```

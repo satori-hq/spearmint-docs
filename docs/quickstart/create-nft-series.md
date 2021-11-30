@@ -23,8 +23,8 @@ The list of collections will return keys and values. The `[CONTRACT_ID]` is the 
 
 ```js
 await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/collections`, {
-	method: 'GET',
-	headers: new Headers({ authorization: 'Bearer [YOUR_API_KEY]' }),
+	method: `GET`,
+	headers: new Headers({ authorization: `Bearer [YOUR_API_KEY]` }),
 })
 ```
 <TryItNowWithEnv />
@@ -34,17 +34,17 @@ await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/collections`, {
 ```js
 
 await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/type`, {
-	method: 'POST',
+	method: `POST`,
 	headers: new Headers({
-		'authorization': 'Bearer [YOUR_API_KEY]',
+		'authorization': `Bearer [YOUR_API_KEY]`,
 		'nft-content': JSON.stringify({
-			contractId: '[CONTRACT_ID]',
-			title: '[SERIES_TITLE]',
-			description: '[NFT_DESCRIPTION]',
+			contractId: `[CONTRACT_ID]`,
+			title: `[SERIES_TITLE]`,
+			description: `[NFT_DESCRIPTION]`,
 			copies: [NUMBER_OF_COPIES],
 		})
 	}),
-	body: await fetch('[IMAGE_URL]').then(r => r.arrayBuffer())
+	body: await fetch(`[IMAGE_URL]`).then(r => r.arrayBuffer())
 })
 ```
 <TryItNowWithEnv />

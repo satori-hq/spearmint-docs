@@ -26,10 +26,10 @@ Now use this with one of the following theme options:
 ```js
 await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/series-theme`, {
 	method: 'POST',
-	headers: new Headers({ authorization: 'Bearer [YOUR_API_KEY]' }),
+	headers: new Headers({ authorization: `Bearer [YOUR_API_KEY]` }),
 	body: JSON.stringify({
-		seriesId: '[SERIES_ID]',
-		theme: '[THEME_NAME]'
+		seriesId: `[SERIES_ID]`,
+		theme: `[THEME_NAME]`
 	})
 })
 ```

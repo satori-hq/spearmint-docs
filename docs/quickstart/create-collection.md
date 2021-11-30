@@ -22,8 +22,8 @@ Click it and get your app set up, then you don't need to fill in: `[YOUR_APP_NAM
 
 ```js
 await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/collection`, {
-	method: 'POST',
-	headers: new Headers({ authorization: 'Bearer [YOUR_API_KEY]' }),
+	method: `POST`,
+	headers: new Headers({ authorization: `Bearer [YOUR_API_KEY]` }),
 	body: JSON.stringify({
 		title: `[YOUR_DESIRED_COLLECTION_TITLE]`
 	})

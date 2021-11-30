@@ -14,8 +14,8 @@ The response will be an array of `[SERIES_ID]` which is in the form: `[CONTRACT_
 
 ```js
 await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/series`, {
-	method: 'GET',
-	headers: new Headers({ authorization: 'Bearer [YOUR_API_KEY]' }),
+	method: `GET`,
+	headers: new Headers({ authorization: `Bearer [YOUR_API_KEY]` }),
 })
 ```
 <TryItNowWithEnv />
@@ -26,10 +26,10 @@ Now you can create a claim link for the NFT:
 
 ```js
 await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/claim`, {
-	method: 'POST',
-	headers: new Headers({ authorization: 'Bearer [YOUR_API_KEY]' }),
+	method: `POST`,
+	headers: new Headers({ authorization: `Bearer [YOUR_API_KEY]` }),
 	body: JSON.stringify({
-		seriesId: '[SERIES_ID]',
+		seriesId: `[SERIES_ID]`,
 		amount: [NUMBER_OF_LINKS]
 	})
 })
@@ -50,10 +50,10 @@ await (async () => {
 	const numBatches = parseInt([NUM_BATCHES]);
 	for (let i = 0; i < numBatches; i++) {
 		results.push(await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/claim`, {
-			method: 'POST',
-			headers: new Headers({ authorization: 'Bearer [YOUR_API_KEY]' }),
+			method: `POST`,
+			headers: new Headers({ authorization: `Bearer [YOUR_API_KEY]` }),
 			body: JSON.stringify({
-				seriesId: '[SERIES_ID]',
+				seriesId: `[SERIES_ID]`,
 				amount: [NUMBER_OF_LINKS]
 			})
 		}).then((result) => result.json()));

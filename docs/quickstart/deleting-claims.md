@@ -22,12 +22,12 @@ await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/series`, {
 
 ```js
 await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/delete-claims`, {
-	method: 'POST',
+	method: `POST`,
 	headers: new Headers({
-		'authorization': 'Bearer [YOUR_API_KEY]',
+		'authorization': `Bearer [YOUR_API_KEY]`,
 	}),
 	body: JSON.stringify({
-		seriesId: '[SERIES_ID]',
+		seriesId: `[SERIES_ID]`,
 		since: Date.now() - [NUMBER_OF_HOURS] * 3600
 	})
 })

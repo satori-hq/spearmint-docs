@@ -12,10 +12,10 @@ Manually claim the linkdrop:
 
 ```js
 await fetch(`[API_ORIGIN]/v1/claim/body-code/linkdrop`, {
-	method: 'POST',
+	method: `POST`,
 	body: JSON.stringify({
-		code: '[CLAIM_CODE]',
-		redirectUrl: encodeURIComponent('[ACCOUNT_CREATION_REDIRECT_URL]')
+		code: `[CLAIM_CODE]`,
+		redirectUrl: encodeURIComponent(`[ACCOUNT_CREATION_REDIRECT_URL]`)
 	})
 })
 ```
@@ -29,10 +29,10 @@ For `[RECEIVER_ACCOUNT_ID]` you can use `testnet` if you are on testnet and are 
 
 ```js
 await fetch(`[API_ORIGIN]/v1/claim/body-code/nft`, {
-	method: 'POST',
+	method: `POST`,
 	body: JSON.stringify({
-		code: '[CLAIM_CODE]',
-		receiverId: '[RECEIVER_ACCOUNT_ID]'
+		code: `[CLAIM_CODE]`,
+		receiverId: `[RECEIVER_ACCOUNT_ID]`
 	})
 })
 
