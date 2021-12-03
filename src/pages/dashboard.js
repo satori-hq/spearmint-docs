@@ -87,6 +87,7 @@ function Dashboard() {
 		}
 
 		claimsArr.sort(([k1, a], [k2, b]) => {
+			if (typeof a !== 'object' || typeof a !== 'object') return 0
 			if (!a.ts) a.ts = parseInt(k1.split('/')[0], 10)
 			if (!b.ts) b.ts = parseInt(k2.split('/')[0], 10)
 			return b.ts - a.ts
