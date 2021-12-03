@@ -18,8 +18,9 @@ const adminLabels = ['Unclaimed', 'NFT Claimed', 'Wallet Created']
 function Dashboard() {
 	const { state: { app: { env, keys } } } = useContext(appStore)
 	const key = keys[env]?.__selected
+	const { appName, apiKey } = key || { appName: 'test', apiKey: 'NA' }
 
-	const url = new URL(window.location.href)
+	const url = new URL(window?.location?.href || 'https://satori.art')
 	const isAdmin = url.searchParams.get('admin')
 
 	const [state, _setState] = useState({
@@ -30,7 +31,6 @@ function Dashboard() {
 
 	const loadState = async () => {
 		if (!key) return
-		const { appName, apiKey } = key
 
 		if (isAdmin) {
 			setState({
