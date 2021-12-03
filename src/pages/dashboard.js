@@ -7,10 +7,13 @@ import { EnvButton } from '../../src/components/EnvButton'
 import { Keys } from '../../src/components/Keys'
 import { Dialog } from '../../src/components/Dialog'
 import { whenFormatted } from '../utils/date'
+import { arrayToCsv, downloadBlob } from '../utils/csv'
 import './dashboard.scss'
 
 import { BarChart } from './../components/Chart'
 import './../components/DialogActions'
+
+const adminLabels = ['Unclaimed', 'NFT Claimed', 'Wallet Created']
 
 function Dashboard() {
 	const { state: { app: { env, keys } } } = useContext(appStore)
@@ -43,6 +46,24 @@ function Dashboard() {
 	}
 	useEffect(loadState, [])
 
+	const handleDownload = async (claims) => {
+		const ret = [[
+			'App Name', 'NFT Title', 'Unclaimed', 'NFT Claimed', 'Wallet Created'
+		]]
+		for (let i = 0; i < claims.length; i++) {
+			const { key, data } = claims[i]
+			const series = Object.entries(data).map(([k, v]) => ([k, ...v]))
+			if (series.length > 0) {
+				ret.push(...series.map(([title, ...data]) => ([key, title, ...data])))
+			} else {
+				ret.push([key])
+			}
+		}
+		downloadBlob(arrayToCsv(ret), 'data.csv', 'text/csv;charset=utf-8;')
+	}
+
+	/// formatting claims
+
 	let {
 		claims, types,
 	} = state
@@ -54,7 +75,7 @@ function Dashboard() {
 
 	let claimsAppArr = Object.entries(claims)
 	let typesAppArr = Object.entries(types)
-	
+
 	claimsAppArr.forEach(([key, val], i) => {
 		typesAppArr[i] = { key: typesAppArr[i][0], data: Object.entries(typesAppArr[i][1]) }
 
@@ -72,19 +93,19 @@ function Dashboard() {
 		})
 
 		/// TODO in API
-		const data = [0, 0, 0]
-		claimsArr.forEach(([k, { nft, ld }]) => {
-			if (!nft && !ld) data[0]++;
-			if (nft) data[1]++;
-			if (ld) data[2]++;
+		const data = {}
+		claimsArr.forEach(([, { contractId, title, nft, ld }]) => {
+			const seriesId = `${contractId}/${title}`
+			if (!data[seriesId]) data[seriesId] = [0, 0, 0]
+			if (!nft && !ld) data[seriesId][0]++;
+			if (nft) data[seriesId][1]++;
+			if (ld) data[seriesId][2]++;
 		})
 
 		claimsAppArr[i] = { key, claimsArr, data }
 	})
 	console.log(claimsAppArr)
 	console.log(typesAppArr)
-
-
 
 	return (
 		<Layout title="Hello">
@@ -96,43 +117,65 @@ function Dashboard() {
 				<Dialog />
 
 				<button disabled={!key} className="custom-button table-of-contents__link" onClick={loadState}>Refresh</button>
+
 				{
-					typesAppArr.map(({ key, data }) => <div key={key}>
-						<h2>{key} NFT Series</h2>
-						<div className="table">
+					!isAdmin ? <>
+						{
+							typesAppArr.map(({ key, data }) => <div key={key}>
+								<h2>{decodeURIComponent(key)} NFT Series</h2>
+								<div className="table">
+									{
+										data.map(([k, v], i) => <div key={i} className="row">
+											<div className="cell">{k}</div>
+											<div className="cell">
+												{JSON.stringify(v)}
+											</div>
+										</div>)
+									}
+								</div>
+							</div>)
+						}
+						{
+							claimsAppArr.map(({ key, claimsArr, data }) => <div key={key}>
+								<h2>{decodeURIComponent(key)} Claim Links</h2>
+								<BarChart data={data} />
+								<div className="table">
+									{
+										claimsArr.slice(0, 100).map(([k, v], i) => {
+											const { ts } = v
+											return <div key={i} className="row">
+												<div className="cell">
+													Created: {whenFormatted(ts)}
+												</div>
+												<div className="cell">
+													{JSON.stringify(v)}
+												</div>
+											</div>
+										})
+									}
+								</div>
+							</div>)
+						}
+
+					</> :
+						<>
+							<button className="custom-button table-of-contents__link" onClick={() => handleDownload(claimsAppArr)}>Download CSV</button>
+
 							{
-								data.map(([k, v], i) => <div key={i} className="row">
-									<div className="cell">{k}</div>
-									<div className="cell">
-										{JSON.stringify(v)}
-									</div>
+								claimsAppArr.map(({ key, claimsArr, data }) => <div key={key}>
+									<h2>{decodeURIComponent(key)}</h2>
+									{
+										Object.entries(data).map(([k, v], i) => <div key={k}>
+											<h4>{k}</h4>
+											{ v.map((v, i) => <p key={i}>{adminLabels[i]} - {v}</p>)}
+										</div>)
+									}
 								</div>)
 							}
-						</div>
-					</div>)
+						</>
 				}
-				{
-					claimsAppArr.map(({ key, claimsArr, data }) => <div key={key}>
-						<h2>{key} Claim Links</h2>
-						{ !isAdmin && <BarChart data={data} /> }
-						{ isAdmin && <p>{JSON.stringify(data)}</p> }
-						<div className="table">
-							{
-								claimsArr.slice(0, 100).map(([k, v], i) => {
-									const { ts } = v
-									return <div key={i} className="row">
-										<div className="cell">
-											Created: {whenFormatted(ts)}
-										</div>
-										<div className="cell">
-											{JSON.stringify(v)}
-										</div>
-									</div>
-								})
-							}
-						</div>
-					</div>)
-				}
+
+
 			</section>
 		</Layout>
 	);
