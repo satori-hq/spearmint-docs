@@ -7,10 +7,6 @@ import './DialogActions'
 
 const allowNoInput = [
 	'[NFT_DESCRIPTION]',
-	'[ACCOUNT_ID_1]',
-	'[ACCOUNT_ID_2]',
-	'[ROYALTY_AMOUNT_1]',
-	'[ROYALTY_AMOUNT_2]',
 ]
 
 export const TryItNow = ({ requiresKeys }) => {
@@ -48,12 +44,9 @@ export const TryItNow = ({ requiresKeys }) => {
 						break;
 					}
 					if (!input) input = await window.prompt(match)
-					if (!input && !allowNoInput.includes(match)) throw 'return'
+					if (!input && !allowNoInput.includes(match)) return;
+					if (input && match === '[ACCOUNT_ID]') input = '"' + input + '"' // ACCOUNT_ID has dots, potentially dashes, and will become object property - so needs to be wrapped in quotes
 					code = code.replace(match, input)
-
-
-
-					console.log('code', code)
 				}
 
 				eval(`(async () => {
