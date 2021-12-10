@@ -29,10 +29,32 @@ await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/collections`, {
 ```
 <TryItNowWithEnv />
 
-#### Creating an NFT Series:
+#### Creating an NFT Series (no royalties):
+
+*NB: `description` property is optional*
+
+```js
+
+await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/type`, {
+	method: `POST`,
+	headers: new Headers({
+		'authorization': `Bearer [YOUR_API_KEY]`,
+		'nft-content': JSON.stringify({
+			contractId: `[CONTRACT_ID]`,
+			title: `[SERIES_TITLE]`,
+			description: `[NFT_DESCRIPTION]`,
+			copies: [NUMBER_OF_COPIES],
+		})
+	}),
+	body: await fetch(`[IMAGE_URL]`).then(r => r.arrayBuffer())
+})
+```
+<TryItNowWithEnv />
+
+#### Creating an NFT Series with royalties:
 
 :::tip
-To add royalties to your NFT series, include **`royalty`** property in `nft-content` header.
+To specify royalties for your NFT series, include optional **`royalty`** property in `nft-content` header.
 
 **`royalty`** can contain up to 10 entries in the format `[ACCOUNT_ID]: [ROYALTY_AMOUNT]`.
 
@@ -42,6 +64,8 @@ To add royalties to your NFT series, include **`royalty`** property in `nft-cont
 - All Account IDs specified in royalty must be valid (existing) accounts
 - No more than 10 accounts may be specified
 :::
+
+*NB: `description` property is optional*
 
 ```js
 
