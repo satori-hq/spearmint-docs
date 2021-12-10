@@ -6,7 +6,11 @@ import { appStore } from './../state/app';
 import './DialogActions'
 
 const allowNoInput = [
-	'[NFT_DESCRIPTION]'
+	'[NFT_DESCRIPTION]',
+	'[ACCOUNT_ID_1]',
+	'[ACCOUNT_ID_2]',
+	'[ROYALTY_AMOUNT_1]',
+	'[ROYALTY_AMOUNT_2]',
 ]
 
 export const TryItNow = ({ requiresKeys }) => {

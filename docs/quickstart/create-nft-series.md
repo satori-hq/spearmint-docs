@@ -29,7 +29,16 @@ await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/collections`, {
 ```
 <TryItNowWithEnv />
 
-#### Creating an NFT Series:
+### Creating an NFT Series:
+
+#### Note re. royalties:
+To add royalties to your NFT series, include `royalty` property in `nft-content` header.
+
+`ROYALTY_AMOUNT` should be calculated as **percentage points * 100**. E.g. 10% == `1000` or 1% == `100`.
+
+**WARNING:**
+- All Account IDs specified in royalty must be valid (existing) accounts
+- No more than 10 accounts may be specified
 
 ```js
 
@@ -42,6 +51,11 @@ await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/type`, {
 			title: `[SERIES_TITLE]`,
 			description: `[NFT_DESCRIPTION]`,
 			copies: [NUMBER_OF_COPIES],
+			royalty?: {
+				[ACCOUNT_ID_1]: [ROYALTY_AMOUNT_1],
+				[ACCOUNT_ID_2]: [ROYALTY_AMOUNT_2],
+				...
+			}
 		})
 	}),
 	body: await fetch(`[IMAGE_URL]`).then(r => r.arrayBuffer())
