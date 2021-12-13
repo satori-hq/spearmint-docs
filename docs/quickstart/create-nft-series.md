@@ -35,7 +35,7 @@ await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/collections`, {
 
 ```js
 
-await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/type`, {
+await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/series`, {
 	method: `POST`,
 	headers: new Headers({
 		'authorization': `Bearer [YOUR_API_KEY]`,
@@ -69,7 +69,7 @@ To specify royalties for your NFT series, include optional **`royalty`** propert
 
 ```js
 
-await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/type`, {
+await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/series`, {
 	method: `POST`,
 	headers: new Headers({
 		'authorization': `Bearer [YOUR_API_KEY]`,

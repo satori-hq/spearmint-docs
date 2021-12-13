@@ -43,8 +43,12 @@ export const TryItNow = ({ requiresKeys }) => {
 						case '[YOUR_API_KEY]': input = apiKey
 						break;
 					}
-					if (!input) input = await window.prompt(match)
-					if (!input && !allowNoInput.includes(match)) return;
+					const tag = !allowNoInput.includes(match) ? ' (required)' : '';
+					if (!input) input = await window.prompt(match + tag)
+					if (!input && !allowNoInput.includes(match)) {
+						i--;
+						continue;
+					}
 					if (input && match === '[ACCOUNT_ID]') input = '"' + input + '"' // ACCOUNT_ID has dots, potentially dashes, and will become object property - so needs to be wrapped in quotes
 					code = code.replace(match, input)
 				}
@@ -65,6 +69,7 @@ export const TryItNow = ({ requiresKeys }) => {
 					alert(ret)
 				})()`);
 			} catch (e) {
+				console.log('e line 73: ', e)
 				return
 			}
 		}}>

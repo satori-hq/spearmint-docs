@@ -46,8 +46,7 @@ if (!window.SET_DIALOG_ACTIONS) {
 		// if (!regex.test(singleResult)) {
 		// 	window.alert()
 		// }
-
-		return singleResult.trim()
+		return singleResult ? singleResult.trim() : singleResult;
 	}
 
 	window.select = async (msg, choices) => {
