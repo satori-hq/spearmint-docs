@@ -79,6 +79,8 @@ input {
 	&:disabled {
 		opacity: 0.25;
 	}
+	border: none;
+	background: white;
 }
 .disabled {
 	opacity: 0.25;
