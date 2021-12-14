@@ -44,7 +44,7 @@ function Main() {
 				<div>
 					<h2>Try Spearmint, our Everything NFTs API!</h2>
 					<h3>Get Started Now!</h3>
-					<button className='green'>Spearmint Docs</button>
+					<a href="/docs/intro"><button className='green'>Spearmint Docs</button></a>
 				</div>
 				<div><Spearmint /></div>
 			</div>
