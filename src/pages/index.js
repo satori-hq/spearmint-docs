@@ -17,9 +17,20 @@ import './index.scss';
 function Main() {
 
 	const [email, setEmail] = useState('')
-	const [sent, setSent] = useState(false)
+	const [sent, setSent] = useState('')
 
 	const post = async () => {
+		var pattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+
+		if (!pattern.test(email)) {
+			setSent('invalid email')
+			setTimeout(() => setSent(''), 1500)
+			return
+		}
+
+		setEmail('')
+		setSent('Thank You!')
+
 		const res = await fetch('https://docs.google.com/forms/u/2/d/e/1FAIpQLSdr96qOYZCHdroL91K-PMPmoHldBC_K5KKiXimhNHivN6ZqUQ/formResponse', {
 			method: "POST",
 			mode: 'no-cors',
@@ -28,9 +39,6 @@ function Main() {
 			}),
 			body: 'entry.2091052604=' + email,
 		}).then(v => v.text());
-
-		setEmail('')
-		setSent(true)
 	}
 	
 	return (
@@ -56,15 +64,15 @@ function Main() {
 
 					<div>
 						<input 
-							disabled={sent} type="text"
+							disabled={sent.length > 0} type="text"
 							placeholder='Your Email' value={email}
 							onChange={(e) => setEmail(e.target.value)}
 							onKeyUp={(e) => {
 								if (e.key === 'Enter') post()
 							}}
 						/>
-						<Arrow className={sent ? 'disabled' : ''} onClick={post} />
-						{sent && 'Thank you!'}
+						<Arrow className={sent.length > 0 ? 'disabled' : ''} onClick={post} />
+						{sent.length > 0 && sent}
 					</div>
 				</div>
 			</div>
