@@ -25,13 +25,13 @@ header {
 	background-color: #303845 !important;
 }
 
-.container {
-	> * {
+.splash {
+	* {
 		font-family: Founders !important;
 		letter-spacing: 0.05rem;
-		font-weight: bold;
 		color: $dark;
 	}
+	font-weight: bold;
 	text-align: center;
 	z-index: 1;
 	padding-top: 64px;
