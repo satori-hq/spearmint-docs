@@ -87,10 +87,10 @@ export default function Home() {
 			title={`Hello from ${siteConfig.title}`}
 			description="Description will go into a meta tag in <head />">
 			<div className='background-wrap'>
-				<div className='header-blobs'></div>
-				<div className='footer-blobs'></div>
-				<div className='footer-blobs'></div>
-				<div className='footer-blobs'></div>
+				<div className='background-inner'>
+					<div className='header-blobs'></div>
+					<div className='footer-blobs'></div>
+				</div>
 			</div>
 			<div className='noise'></div>
 
