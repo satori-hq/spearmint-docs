@@ -134,11 +134,14 @@ input {
 	height: 100%;
 	overflow: hidden;
 	> .header-blobs {
+		margin-top: -100px;
+		margin-left: -100px;
+		width: calc(100% + 200px);
 		height: calc(57vw);
 		background-image: url('../../static/img/header-blobs.svg');
 		background-size: cover;
 		background-repeat: no-repeat;
-		filter: blur(75px);
+		filter: blur(100px) saturate(1.8);
 	}
 	
 	> .footer-blobs {
@@ -147,7 +150,7 @@ input {
 		background-image: url('../../static/img/footer-blobs.svg');
 		background-size: 100%;
 		background-repeat: no-repeat;
-		filter: blur(75px);
+		filter: blur(100px) saturate(1.8);
 	}
 }
 	
@@ -160,8 +163,9 @@ input {
 	background-image: url('../../static/img/noise.svg');
 	background-size: cover;
 	background-repeat: no-repeat;
-	filter: saturate(0) brightness(1.2);
-	opacity: 0.5;
+	background-blend-mode: multiply;
+	filter: saturate(0);
+	opacity: 0.4;
 }
 
 @media (max-width: 500px) {
