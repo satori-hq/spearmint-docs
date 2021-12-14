@@ -1,41 +1,83 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import styles from './index.module.css';
 import HomepageFeatures from '../components/HomepageFeatures';
-import BrowserOnly from '@docusaurus/BrowserOnly';
 
-function HomepageHeader() {
-	const { siteConfig } = useDocusaurusContext();
+import BrowserOnly from '@docusaurus/BrowserOnly';
+import Satori from '@site/static/img/satori.svg';
+import Sakura from '@site/static/img/sakura.svg';
+import Spearmint from '@site/static/img/spearmint.svg';
+import Arrow from '@site/static/img/arrow.svg';
+
+import './index.scss';
+
+function Main() {
+
+	const [email, setEmail] = useState('')
+	const [sent, setSent] = useState(false)
+
+	const post = async () => {
+		const res = await fetch('https://docs.google.com/forms/u/2/d/e/1FAIpQLSdr96qOYZCHdroL91K-PMPmoHldBC_K5KKiXimhNHivN6ZqUQ/formResponse', {
+			method: "POST",
+			mode: 'no-cors',
+			headers: new Headers({
+				'content-type': 'application/x-www-form-urlencoded'
+			}),
+			body: 'entry.2091052604=' + email,
+		}).then(v => v.text());
+
+		setEmail('')
+		setSent(true)
+	}
+	
 	return (
-		<header className={clsx('hero hero--primary', styles.heroBanner)}>
-			<div className="container">
-				<h1 className="hero__title">{siteConfig.title}</h1>
-				<p className="hero__subtitle">{siteConfig.tagline}</p>
-				<div className={styles.buttons}>
-					<Link
-						className="button button--secondary button--lg"
-						to="/docs/intro">
-						Get Started - 5min ⏱️
-					</Link>
+		<div className="container">
+			<Satori />
+			<br />
+			<Sakura />
+			<h2>Easy, Accessible NFTs</h2>
+			<p>Launching early 2022</p>
+			<div className='bubble'>
+				<div>
+					<h2>Try Spearmint, our Everything NFTs API!</h2>
+					<h3>Get Started Now!</h3>
+					<button className='green'>Spearmint Docs</button>
+				</div>
+				<div><Spearmint /></div>
+			</div>
+			<div className='bubble'>
+				<div>
+					<h2>Sign up for news about our launch!</h2>
+				</div>
+				<div>
+
+					<div>
+						<input disabled={sent} type="text" placeholder='Your Email' value={email} onChange={(e) => setEmail(e.target.value)} />
+						<Arrow className={sent ? 'disabled' : ''} onClick={post} />
+						{sent && 'Thank you!'}
+					</div>
 				</div>
 			</div>
-		</header>
+		</div>
 	);
 }
 
 export default function Home() {
 	const { siteConfig } = useDocusaurusContext();
 	return (
-			<Layout
-				title={`Hello from ${siteConfig.title}`}
-				description="Description will go into a meta tag in <head />">
-				<HomepageHeader />
-				<main>
-					<HomepageFeatures />
-				</main>
-			</Layout>
+		<Layout
+			title={`Hello from ${siteConfig.title}`}
+			description="Description will go into a meta tag in <head />">
+			<div className='background-wrap'>
+				<div className='header-blobs'></div>
+				<div className='footer-blobs'></div>
+			</div>
+			<div className='noise'></div>
+
+			<Main />
+		</Layout>
 	);
 }

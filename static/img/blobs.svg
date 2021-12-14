@@ -1,0 +1,16 @@
+<svg width="1440" height="1793" viewBox="0 0 1440 1793" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="499.686" height="187.328" rx="93.6642" transform="matrix(-0.707107 -0.707107 -0.707107 0.707107 1584.27 1773.38)" fill="#FFC3FF"/>
+<rect x="-145" y="1773.33" width="499.686" height="187.469" rx="93.7347" transform="rotate(-45 -145 1773.33)" fill="#FFC3FF"/>
+<rect x="170.022" y="1752.4" width="371.062" height="187.469" rx="93.7347" transform="rotate(-45 170.022 1752.4)" fill="#FF6043"/>
+<rect width="371.062" height="187.469" rx="93.7347" transform="matrix(-0.707107 -0.707107 -0.707107 0.707107 1270.96 1752.4)" fill="#FF6043"/>
+<path d="M981.666 1664.85C960.334 1614.63 911.053 1582.02 856.491 1582.02H583.554C528.992 1582.02 479.711 1614.63 458.379 1664.85C420.279 1754.54 486.105 1854.02 583.554 1854.02H856.491C953.94 1854.02 1019.77 1754.54 981.666 1664.85Z" fill="#C3FABD"/>
+<rect width="245.735" height="398.536" rx="122.868" transform="matrix(-0.707107 0.707107 0.707107 0.707107 1186.3 367)" fill="#C3FABD"/>
+<rect x="252.407" y="367" width="245.735" height="398.536" rx="122.868" transform="rotate(45 252.407 367)" fill="#C3FABD"/>
+<rect x="25.0684" y="175" width="475.418" height="183.029" rx="91.5147" transform="rotate(60 25.0684 175)" fill="#FFC4FF"/>
+<rect width="475.418" height="183.029" rx="91.5147" transform="matrix(-0.5 0.866025 0.866025 0.5 1414.11 175)" fill="#FFC4FF"/>
+<rect width="791.22" height="201" rx="100.5" transform="matrix(0.866025 0.5 0.5 -0.866025 -73.4004 6)" fill="#FFC3FF"/>
+<rect x="1513.07" y="1" width="810.931" height="201" rx="100.5" transform="rotate(150 1513.07 1)" fill="#FFC3FF"/>
+<rect width="619" height="159.546" rx="79.7731" transform="matrix(0.707107 0.707107 0.707107 -0.707107 -158 35.8962)" fill="#FF6043"/>
+<rect x="1597.18" y="35.8962" width="619" height="159.546" rx="79.7731" transform="rotate(135 1597.18 35.8962)" fill="#FF6043"/>
+<rect x="1013.6" y="-108" width="336" height="587" rx="168" transform="rotate(90 1013.6 -108)" fill="#C3FABD"/>
+</svg>
