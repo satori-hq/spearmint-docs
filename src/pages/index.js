@@ -55,7 +55,14 @@ function Main() {
 				<div>
 
 					<div>
-						<input disabled={sent} type="text" placeholder='Your Email' value={email} onChange={(e) => setEmail(e.target.value)} />
+						<input 
+							disabled={sent} type="text"
+							placeholder='Your Email' value={email}
+							onChange={(e) => setEmail(e.target.value)}
+							onKeyUp={(e) => {
+								if (e.key === 'Enter') post()
+							}}
+						/>
 						<Arrow className={sent ? 'disabled' : ''} onClick={post} />
 						{sent && 'Thank you!'}
 					</div>
