@@ -1,8 +1,8 @@
-<svg width="1440" height="823" viewBox="0 0 1440 823" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="390" height="844" viewBox="0 0 390 844" fill="none" xmlns="http://www.w3.org/2000/svg">
   <filter id='noiseFilter'>
     <feTurbulence 
       type='fractalNoise' 
-      baseFrequency='1' 
+      baseFrequency='1.6' 
       numOctaves='8' 
       stitchTiles='stitch' />
   </filter>

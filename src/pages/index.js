@@ -74,6 +74,8 @@ export default function Home() {
 			<div className='background-wrap'>
 				<div className='header-blobs'></div>
 				<div className='footer-blobs'></div>
+				<div className='footer-blobs'></div>
+				<div className='footer-blobs'></div>
 			</div>
 			<div className='noise'></div>
 
