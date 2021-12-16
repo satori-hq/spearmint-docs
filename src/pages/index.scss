@@ -50,19 +50,6 @@ header {
 		text-transform: uppercase;
 		letter-spacing: 0.2rem;
 	}
-	> input {
-		height: 56px;
-		border-radius: 28px;
-		font-family: Founders !important;
-		letter-spacing: 0.05rem;
-		font-size: 1.1rem;
-		padding-left: 24px;
-		&:disabled {
-			opacity: 0.25;
-		}
-		border: none;
-		background: white;
-	}
 }
 
 .navbar__items {
@@ -96,6 +83,22 @@ button.green {
 	justify-content: space-around;
 	align-items: center;
 	margin-bottom: 128px;
+
+
+        > input {
+		height: 56px;
+		border-radius: 28px;
+		font-family: Founders !important;
+		letter-spacing: 0.05rem;
+		font-size: 1.1rem;
+		padding-left: 24px;
+		&:disabled {
+			opacity: 0.25;
+		}
+		border: none;
+		background: white;
+	}
+
 	&:first-of-type {
 		margin-top: 128px;
 		margin-bottom: 32px;
