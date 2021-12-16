@@ -50,6 +50,19 @@ header {
 		text-transform: uppercase;
 		letter-spacing: 0.2rem;
 	}
+	> input {
+		height: 56px;
+		border-radius: 28px;
+		font-family: Founders !important;
+		letter-spacing: 0.05rem;
+		font-size: 1.1rem;
+		padding-left: 24px;
+		&:disabled {
+			opacity: 0.25;
+		}
+		border: none;
+		background: white;
+	}
 }
 
 .navbar__items {
@@ -67,20 +80,6 @@ button.green {
 	background: $green;
 	min-width: 256px;
 	border: none;
-}
-
-input {
-	height: 56px;
-	border-radius: 28px;
-	font-family: Founders !important;
-	letter-spacing: 0.05rem;
-	font-size: 1.1rem;
-	padding-left: 24px;
-	&:disabled {
-		opacity: 0.25;
-	}
-	border: none;
-	background: white;
 }
 .disabled {
 	opacity: 0.25;
