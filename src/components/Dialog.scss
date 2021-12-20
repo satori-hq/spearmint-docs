@@ -38,6 +38,8 @@ section.modal {
         align-items: center;
         .wrap {
 			max-width: $width;
+            max-height: calc(100vh - 2em);
+            overflow-y: scroll;
             box-shadow: $shadow;
             text-align: center;
             margin: $margin;
