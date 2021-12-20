@@ -89,11 +89,21 @@ function Dashboard() {
 
 				<h2>NFT Series</h2>
 				<div className="table">
+					<div className="row">
+						<div className="cell">Contract ID</div>
+						<div className="cell">Series Title</div>
+						<div className="cell">Created At</div>
+						<div className="cell">UI Theme</div>
+					</div>
 					{
 						typesArr.map(([k, v], i) => <div key={i} className="row">
-							<div className="cell">{k}</div>
+							<div className="cell">{k.split('/')[0]}</div>
+							<div className="cell">{k.split('/')[1]}</div>
 							<div className="cell">
-								{JSON.stringify(v)}
+								{whenFormatted(v.ts)}
+							</div>
+							<div className="cell">
+								{v.theme || 'None'}
 							</div>
 						</div>)
 					}
@@ -112,15 +122,26 @@ function Dashboard() {
 
 				<h2>Claim Links</h2>
 				<div className="table">
+					<div className="row">
+						<div className="cell">Created</div>
+						<div className="cell">Series ID</div>
+						<div className="cell">NFT Claimed</div>
+						<div className="cell">Wallet Created</div>
+					</div>
 					{
 						claimsArr.slice(0, 100).map(([k, v], i) => {
-							const { ts } = v
 							return <div key={i} className="row">
 								<div className="cell">
-									Created: {whenFormatted(ts)}
+									{whenFormatted(v.ts)}
 								</div>
 								<div className="cell">
-									{JSON.stringify(v)}
+									{v.contractId + '/' + v.title}
+								</div>
+								<div className="cell">
+									{'nft' in v ? 'Yes' : 'No'}
+								</div>
+								<div className="cell">
+									{'ld' in v ? 'Yes' : 'No'}
 								</div>
 							</div>
 						})

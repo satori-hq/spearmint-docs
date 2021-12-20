@@ -37,14 +37,15 @@ button {
 		border-bottom: 1px solid #eee;
 		&:first-of-type {
 			border-top: 1px solid #eee;
+			font-weight: bold;
 		}
 		.cell {
 			display: flex;
 			align-items: center;
 			font-size: 0.7rem;
 			line-height: 0.8rem;
-			height: 32px;
-			min-width: 33vw;
+			height: 36px;
+			// min-width: 33vw;
 			flex: 1;
 			padding: 0.5rem 1rem;
 			border-right: 1px solid #eee;
