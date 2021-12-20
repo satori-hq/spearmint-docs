@@ -11,7 +11,7 @@ const ENVS = {
 
 const ENV_KEY = '__ENV_KEY'
 
-export const EnvButton = () => {
+export const EnvButton = ({ onChange }) => {
 	const { dispatch, update, state: { app: { env } } } = useContext(appStore)
 
 	useEffect(() => {
@@ -20,11 +20,12 @@ export const EnvButton = () => {
 
 	return <button
 		className="custom-button table-of-contents__link"
-		onClick={() => {
+		onClick={async () => {
 			let nextEnv = ENVS[env]
-			if (nextEnv === 'dev' &&  window.location.href.indexOf('spearmint') > -1) nextEnv = 'testnet'
+			// if (nextEnv === 'dev' &&  window.location.href.indexOf('spearmint') > -1) nextEnv = 'testnet'
 			update('app.env', nextEnv)
 			set(ENV_KEY, nextEnv)
+			if (onChange) await onChange();
 		}}
 	>Network: {env}</button>
 }

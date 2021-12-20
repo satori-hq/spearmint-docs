@@ -5,9 +5,10 @@ import { appStore } from './../state/app';
 
 const KEYS_KEY = '__KEYS_KEY'
 
-export const Keys = () => {
+export const Keys = ({ adminApps, onChange }) => {
 	const { dispatch, update, state: { app: { env, keys } } } = useContext(appStore)
-	const keysEnv = keys[env] || {}
+	let keysEnv = keys[env] || {}
+	if (adminApps) keysEnv = adminApps;
 	
 	useEffect(() => {
 		update('app.keys', {
@@ -49,8 +50,6 @@ export const Keys = () => {
 					default: {
 						const appName = selected.split('App: ')[1]
 
-						console.log(appName, keysEnv[appName])
-
 						if (!keysEnv[appName]) {
 							return window.alert('App does not exist')
 						}
@@ -58,6 +57,7 @@ export const Keys = () => {
 						const newKeys = { ...keys, [env]: keysEnv }
 						set(KEYS_KEY, newKeys)
 						update('app.keys', newKeys)
+						if (onChange) await onChange();
 						return
 					}
 				}
