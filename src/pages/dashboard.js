@@ -23,8 +23,7 @@ function Dashboard() {
 	})
 	const setState = (newState) => _setState((state) => ({ ...state, ...newState }))
 
-	const searchParams = new URLSearchParams(window.location.search);
-	const admin = searchParams.get('admin');
+	const admin = window.location.href.split('?admin=')[1];
 
 	const loadApps = async () => {
 		if (!admin) {
