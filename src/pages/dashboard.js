@@ -23,9 +23,8 @@ function Dashboard() {
 	})
 	const setState = (newState) => _setState((state) => ({ ...state, ...newState }))
 
-	const admin = window.location.href.split('?admin=')[1];
-
 	const loadApps = async () => {
+		const admin = window.location.href.split('?admin=')[1];
 		if (!admin) {
 			setState({ apps: {} })
 			return;
@@ -38,6 +37,7 @@ function Dashboard() {
 	}
 
 	const loadState = async () => {
+		const admin = window.location.href.split('?admin=')[1];
 		if (!key) return
 		let { appName, apiKey } = key
 		setState({ types: await getCall({ env, appName, apiKey, path: 'types', params: admin ? { admin: apiKey } : {} }) })
