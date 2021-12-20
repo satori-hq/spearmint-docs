@@ -22,8 +22,9 @@ export const BarChart = ({ data }) => {
 
 	useEffect(() => {
 		if (!chart) return
-		const ds = chart.data.datasets[0]
+		const ds = chart.data.datasets[0];
 		ds.data = data
+		chart.data.labels = [`Unclaimed (${ds.data[0]})`, `NFT Claimed (${ds.data[1]})`, `Wallet Created (${ds.data[2]})`]
 		chart.update();
 	}, [data])
 

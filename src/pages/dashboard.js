@@ -24,6 +24,8 @@ function Dashboard() {
 	const setState = (newState) => _setState((state) => ({ ...state, ...newState }))
 
 	const loadApps = async () => {
+		if (!env) return;
+		delete keys[env]?.__selected; // remove selected app when changing environments
 		const admin = window.location.href.split('?admin=')[1];
 		if (!admin) {
 			setState({ apps: {} })
@@ -33,21 +35,25 @@ function Dashboard() {
 		for (let key in apps) {
 			apps[key] = admin;
 		}
-		setState({ apps })
+		setState({ apps, types: {}, claims: {} });
 	}
 
 	const loadState = async () => {
-		const admin = window.location.href.split('?admin=')[1];
-		if (!key) return
-		let { appName, apiKey } = key
-		setState({ types: await getCall({ env, appName, apiKey, path: 'types', params: admin ? { admin: apiKey } : {} }) })
-		setState({ claims: await getCall({ env, appName, apiKey, path: 'claims', params: admin ? { admin: apiKey } : {} }) })
+		const key = keys[env]?.__selected;
+		if (!key) {
+			setState({ types: {}, claims: {} });
+			return;
+		} else {
+			const admin = window.location.href.split('?admin=')[1];
+			let { appName, apiKey } = key
+			setState({ types: await getCall({ env, appName, apiKey, path: 'types', params: admin ? { admin: apiKey } : {} }) })
+			setState({ claims: await getCall({ env, appName, apiKey, path: 'claims', params: admin ? { admin: apiKey } : {} }) })
+		}
 	}
 
-	useEffect(() => {
-		loadApps();
-		loadState();
-	}, [])
+	useEffect(loadApps, [env]);
+
+	useEffect(loadState, [key]);
 
 	const {
 		claims, types, apps,
@@ -78,11 +84,8 @@ function Dashboard() {
 			<section>
 				<h2>App Details</h2>
 
-				<Keys
-				adminApps={apps}
-				onChange={loadState}
-				/>
-				<EnvButton onChange={loadApps} />
+				<Keys adminApps={apps} />
+				<EnvButton />
 				<Dialog />
 
 				<button disabled={!key} className="custom-button table-of-contents__link" onClick={loadState}>Refresh</button>

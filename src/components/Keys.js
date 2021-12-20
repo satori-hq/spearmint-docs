@@ -5,7 +5,7 @@ import { appStore } from './../state/app';
 
 const KEYS_KEY = '__KEYS_KEY'
 
-export const Keys = ({ adminApps, onChange }) => {
+export const Keys = ({ adminApps }) => {
 	const { dispatch, update, state: { app: { env, keys } } } = useContext(appStore)
 	let keysEnv = keys[env] || {}
 	if (adminApps) keysEnv = adminApps;
@@ -55,9 +55,8 @@ export const Keys = ({ adminApps, onChange }) => {
 						}
 						keysEnv.__selected = { appName, apiKey: keysEnv[appName] }
 						const newKeys = { ...keys, [env]: keysEnv }
-						set(KEYS_KEY, newKeys)
+						if (!adminApps) set(KEYS_KEY, newKeys) // don't set on local storage if this is an admin user switching between apps
 						update('app.keys', newKeys)
-						if (onChange) await onChange();
 						return
 					}
 				}
