@@ -129,7 +129,7 @@ function Dashboard() {
 						<div className="cell">Wallet Created</div>
 					</div>
 					{
-						claimsArr.slice(0, 100).map(([k, v], i) => {
+						claimsArr.map(([k, v], i) => {
 							return <div key={i} className="row">
 								<div className="cell">
 									{whenFormatted(v.ts)}
