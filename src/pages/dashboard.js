@@ -66,11 +66,12 @@ function Dashboard() {
 			if (!b.ts) b.ts = parseInt(k2.split('/')[0], 10)
 			return b.ts - a.ts
 		});
-		const data = [0, 0, 0]
+		const data = [0, 0, 0, 0]
 		arr.forEach(([k, { nft, ld }]) => {
-			if (!nft && !ld) data[0]++;
-			if (nft) data[1]++;
-			if (ld) data[2]++;
+			data[0]++;
+			if (!nft && !ld) data[1]++;
+			if (nft) data[2]++;
+			if (ld) data[3]++;
 		})
 		return [arr, data];
 	}, [claims]);
@@ -112,7 +113,7 @@ function Dashboard() {
 					}
 				</div>
 
-				<h2>Summary</h2>
+				<h2>Claim Links - Summary</h2>
 				<button
 					className="custom-button table-of-contents__link"
 					onClick={() => {
@@ -123,7 +124,7 @@ function Dashboard() {
 				>Download CSV</button>
 				<BarChart data={claimsData} />
 
-				<h2>Claim Links</h2>
+				<h2>Claim Links ({claimsArr.length} total)</h2>
 				<div className="table">
 					<div className="row">
 						<div className="cell">Created</div>

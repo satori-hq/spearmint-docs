@@ -24,7 +24,7 @@ export const BarChart = ({ data }) => {
 		if (!chart) return
 		const ds = chart.data.datasets[0];
 		ds.data = data
-		chart.data.labels = [`Unclaimed (${ds.data[0]})`, `NFT Claimed (${ds.data[1]})`, `Wallet Created (${ds.data[2]})`]
+		chart.data.labels = [`Total (${ds.data[0]})`, `NFT Unclaimed (${ds.data[1]})`, `NFT Claimed (${ds.data[2]})`, `Wallet Created (${ds.data[3]})`]
 		chart.update();
 	}, [data])
 
@@ -33,7 +33,7 @@ export const BarChart = ({ data }) => {
 		setChart(new Chart(ctx, {
 			type: 'bar',
 			data: {
-				labels: ['Unclaimed', 'NFT Claimed', 'Wallet Created'],
+				labels: ['Total', 'NFT Unclaimed', 'NFT Claimed', 'Wallet Created'],
 				datasets: [{
 					label: '# of Votes',
 					data,
