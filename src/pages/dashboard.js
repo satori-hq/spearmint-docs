@@ -117,7 +117,7 @@ function Dashboard() {
 				<button
 					className="custom-button table-of-contents__link"
 					onClick={() => {
-						const rows = [['Unclaimed', 'NFT Claimed', 'Wallet Created']];
+						const rows = [['Total', 'NFT Unclaimed', 'NFT Claimed', 'Wallet Created']];
 						rows.push(claimsData);
 						downloadBlob(arrayToCsv(rows), `summary-${key.appName}-${Date.now()}.csv`, 'text/csv;charset=utf-8;')
 					}}
