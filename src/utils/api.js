@@ -1,7 +1,7 @@
 /// TODO handle fetch errors
 
 export const getCall = async ({ env, appName, apiKey, path, params })=> {
-	const url = new URL(`https://spearmint-${env}.near.workers.dev/v1/api/${appName}/${path}`);
+	const url = new URL(`https://spearmint-${env}.satdev.workers.dev/v1/api/${appName}/${path}`);
 	if (params) {
 		for (let key in params) {
 			url.searchParams.append(key, params[key])

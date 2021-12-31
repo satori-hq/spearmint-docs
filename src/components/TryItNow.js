@@ -36,7 +36,7 @@ export const TryItNow = ({ requiresKeys }) => {
 					let input
 					switch (match) {
 						case '[API_ORIGIN]':
-							code = code.replace(match, `https://spearmint-${env}.near.workers.dev`);
+							code = code.replace(match, `https://spearmint-${env}.satdev.workers.dev`);
 							continue;
 						case '[YOUR_APP_NAME]': input = appName
 						break;
