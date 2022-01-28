@@ -20,15 +20,23 @@ export const Keys = ({ adminApps }) => {
 		<button
 			className="custom-button table-of-contents__link"
 			onClick={async () => {
-				const selected = await window.select('Select or Set Up an App',[
+				const selected = await window.select('Please select, add or remove an app.',[
 					...Object.keys(keysEnv).filter((k) => k.indexOf('__') !== 0).map((k) => 'App: ' + k),
 					'Add',
 					'Remove'
 				])
 				switch (selected) {
 					case 'Add': {
-						const appName = await window.prompt('App Name for Key?');
-						const apiKey = await window.prompt('Api Key for ' + appName + '?');
+						const appName = await window.prompt('Enter your app name');
+						const apiKey = await window.prompt('Enter API key for ' + appName);
+						const res = await fetch(`https://spearmint-${env}.satdev.workers.dev/v1/api/${appName}/verify`, {
+							headers: {
+								Authorization: `Bearer ${apiKey}`
+							}
+						});
+						if (res.status !== 200) {
+							return window.alert('Credentials not valid; please check them and try again. (Hint: did you activate your app?)')
+						}
 						keysEnv[appName] = apiKey
 						keysEnv.__selected = { appName, apiKey }
 						const newKeys = { ...keys, [env]: keysEnv }

@@ -62,11 +62,11 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 						position: 'left',
 						label: 'Dashboard',
 					},
-					{
-						href: 'https://github.com/satori-hq/spearmint-docs',
-						label: 'GitHub',
-						position: 'right',
-					},
+					// {
+					// 	href: 'https://github.com/satori-hq/spearmint-docs',
+					// 	label: 'GitHub',
+					// 	position: 'right',
+					// },
 				],
 			},
 			footer: {

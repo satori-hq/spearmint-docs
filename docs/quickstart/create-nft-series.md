@@ -6,17 +6,18 @@ import { Dialog } from '../../src/components/Dialog'
 
 # Create an NFT Series
 
-This is your NFT "definition". It will define what your NFT is and the media that it represents.
+This is your NFT "template." It will define what your NFT is and the media that it represents.
 
 First you need to find out the `[CONTRACT_ID]` of your collection. You can do that by getting a list of your collections.
 
-The list of collections will return keys and values. The `[CONTRACT_ID]` is the key for your collection data.
+The list of collections will be in the format `{ [CONTRACT_ID]: [COLLECTION_DATA], ... }`.
 
 
-#### Example:
+Example response:
+
 ```js
-{"jeff-handout-test.snft.testnet":{"title":"Jeff Handout Test","ts":1637199109816}}
-// The collection's contract ID is: jeff-handout-test.snft.testnet
+{"lachlans-collection.snft.testnet":{"title":"Lachlan's Collection","ts":1637199109816}}
+// The collection's contract ID is: lachlans-collection.snft.testnet
 ```
 
 #### Getting Collections:
@@ -29,9 +30,17 @@ await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/collections`, {
 ```
 <TryItNowWithEnv />
 
-#### Creating an NFT Series (no royalties):
+#### Creating an NFT Series
 
-*NB: `description` property is optional*
+:::tip
+1. An NFT series can be created with or without royalties, as you wish. We demonstrate both options below.
+
+2. When you create a series, the template for that series is added to the deployed Smart Contract. Because this involves a state change on the NEAR blockchain, the request will take a couple seconds to return - just like when you created your Collection.
+:::
+
+*NB: `description` property is optional in both cases*
+
+**No royalties:**
 
 ```js
 
@@ -51,7 +60,7 @@ await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/series`, {
 ```
 <TryItNowWithEnv />
 
-#### Creating an NFT Series with royalties:
+**With royalties:**
 
 :::tip
 To specify royalties for your NFT series, include optional **`royalty`** property in `nft-content` header.

@@ -6,7 +6,7 @@ import { Dialog } from '../../src/components/Dialog'
 
 # Deleting Claims
 
-Manually delete unused claims since a period in time e.g. 1 week ago.
+Manually delete unused claims since a period in time, e.g. 1 week ago.
 
 #### Get NFT Series ID:
 

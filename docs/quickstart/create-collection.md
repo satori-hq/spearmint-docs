@@ -4,18 +4,23 @@ sidebar_position: 2
 import { TryItNowWithEnv } from '../../src/components/TryItNow'
 import { Dialog } from '../../src/components/Dialog'
 
-# Create an NFT Collection
+# Create a Collection
 
-In order to get started you will need an account to create NFT series from.
+In order to get started you will need a Collection (Smart Contract deployed on NEAR) to create your NFT series from. Think of your contract/collection like an art collection that may contain many artworks, some of which are 1/1 and some 1/100 series.
 
-Collection > NFT Series > NFT
+***Collection (Smart Contract) > NFT Series > NFT***
 
-e.g. an art collection that may contain many artworks, some of which are 1/1 and some 1/100 series.
+When you create a new Collection via the "Try it now!" button below, you may notice that the request takes a couple seconds to return. That's because it deploying a new Smart Contract to the NEAR blockchain. Cool, huh! 😎
+
+*NB: Currently, collection names must be unique globally across all Spearmint apps. This won't always be the case, but in the meantime, if you're trying to use a fairly generic collection name and it's not available, that's why!*
 
 :::tip
-The button `No App Selected` is for the app name and API KEY you just received in your email.
 
-Click it and get your app set up, then you don't need to fill in: `[YOUR_APP_NAME]` and `[YOUR_API_KEY]` as it will do this automatically.
+1. Make sure you have the correct app selected. If the middle button below says **"No App Selected"**, click it and input the app name and API key you just received in your email (and subsequently activated).
+
+2. Once you have your app set up, you won't need to fill in `[YOUR_APP_NAME]` and `[YOUR_API_KEY]` as they will be inserted automatically.
+
+3. Collection title must be 32 characters or fewer.
 :::
 
 #### Example:
@@ -29,6 +34,7 @@ await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/collection`, {
 	})
 })
 ```
+
 <TryItNowWithEnv />
 <Dialog />
 

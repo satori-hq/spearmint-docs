@@ -67,6 +67,25 @@ export const Dialog = () => {
 
 	if (!state.msg) return null
 
+	const renderMessage = (msg) => {
+		if (typeof msg === 'string') {
+			if (msg.includes('message')) {
+				const parsed = JSON.parse(msg);
+				if (typeof parsed === 'string') return JSON.parse(parsed).message;
+				else return parsed.message;
+			}
+			else if (msg.includes('error')) {
+				const parsed = JSON.parse(msg);
+				if (typeof parsed === 'string') return JSON.parse(parsed).error;
+				else return parsed.error;
+			}
+			else return msg;
+		} else {
+			if ('message' in msg) return msg.message;
+			return 'Success! Please check the console to view full response.'
+		}
+	}
+
 	return <section className="modal" onClick={() => handleClose(true)}>
 		<div className="background"></div>
 		<div className="content">
@@ -80,7 +99,7 @@ export const Dialog = () => {
 					{/* <img src={Close} /> */}
 				</div>
 
-				<main>{msg}</main>
+				<main>{renderMessage(msg)}</main>
 
 				{
 					input &&

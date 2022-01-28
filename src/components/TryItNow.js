@@ -5,9 +5,35 @@ import { appStore } from './../state/app';
 
 import './DialogActions'
 
+const MATCHES = {
+	YOUR_DESIRED_APP_NAME: '[YOUR_DESIRED_APP_NAME]',
+	NFT_DESCRIPTION: '[NFT_DESCRIPTION]',
+	API_ORIGIN: '[API_ORIGIN]',
+	YOUR_APP_NAME: '[YOUR_APP_NAME]',
+	YOUR_API_KEY: '[YOUR_API_KEY]',
+	ACCOUNT_ID: '[ACCOUNT_ID]',
+	YOUR_DESIRED_COLLECTION_TITLE: '[YOUR_DESIRED_COLLECTION_TITLE]',
+	NUMBER_OF_LINKS: '[NUMBER_OF_LINKS]',
+}
+
 const allowNoInput = [
-	'[NFT_DESCRIPTION]',
+	MATCHES.NFT_DESCRIPTION,
 ]
+
+const isValidInput = (match, input) => {
+
+	if (!input && !allowNoInput.includes(match)) return false;
+	if (input && match === MATCHES.YOUR_DESIRED_APP_NAME) {
+		if (/[/]/.test(input) || input.length > 32) return false;
+	}
+	if (input && match === MATCHES.YOUR_DESIRED_COLLECTION_TITLE) {
+		if (input.length > 32) return false;
+	}
+	if (input && match === MATCHES.NUMBER_OF_LINKS) {
+		return !isNaN(Number(input));
+	}
+	return true;
+}
 
 export const TryItNow = ({ requiresKeys }) => {
 
@@ -35,24 +61,23 @@ export const TryItNow = ({ requiresKeys }) => {
 					const match = matches[i]
 					let input
 					switch (match) {
-						case '[API_ORIGIN]':
+						case MATCHES.API_ORIGIN:
 							code = code.replace(match, `https://spearmint-${env}.satdev.workers.dev`);
 							continue;
-						case '[YOUR_APP_NAME]': input = appName
+						case MATCHES.YOUR_APP_NAME: input = appName
 						break;
-						case '[YOUR_API_KEY]': input = apiKey
+						case MATCHES.YOUR_API_KEY: input = apiKey
 						break;
 					}
 					const tag = !allowNoInput.includes(match) ? ' (required)' : '';
 					if (!input) input = await window.prompt(match + tag)
-					if (!input && !allowNoInput.includes(match)) {
+					if (!isValidInput(match, input)) {
 						i--;
 						continue;
 					}
-					if (input && match === '[ACCOUNT_ID]') input = '"' + input + '"' // ACCOUNT_ID has dots, potentially dashes, and will become object property - so needs to be wrapped in quotes
+					if (input && match === MATCHES.ACCOUNT_ID) input = '"' + input + '"' // ACCOUNT_ID has dots, potentially dashes, and will become object property - so needs to be wrapped in quotes
 					code = code.replace(match, input)
 				}
-
 				eval(`(async () => {
 					const res = ${code.substr(0, code.length - 4)};
 					let ret
@@ -61,15 +86,11 @@ export const TryItNow = ({ requiresKeys }) => {
 						case false: ret = await res.text(); break;
 						case undefined: ret = res; break;
 					}
-					console.log(ret)
-					ret = JSON.stringify(ret)
-					if (ret.length > 512) {
-						return alert('Response too large. Outputted to JS console.')
-					}
-					alert(ret)
+					console.log(ret);
+					return alert(ret);
 				})()`);
 			} catch (e) {
-				console.log('e line 73: ', e)
+				console.log('error: ', e)
 				return
 			}
 		}}>
