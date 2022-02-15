@@ -13,6 +13,7 @@ const MATCHES = {
 	YOUR_API_KEY: '[YOUR_API_KEY]',
 	ACCOUNT_ID: '[ACCOUNT_ID]',
 	YOUR_DESIRED_COLLECTION_TITLE: '[YOUR_DESIRED_COLLECTION_TITLE]',
+	SERIES_ID: '[SERIES_ID]',
 	NUMBER_OF_LINKS: '[NUMBER_OF_LINKS]',
 }
 
@@ -75,6 +76,7 @@ export const TryItNow = ({ requiresKeys }) => {
 						i--;
 						continue;
 					}
+					if (input && match === MATCHES.SERIES_ID) input = encodeURIComponent(input) // SERIES_ID contains a slash, so needs to be uri-encoded
 					if (input && match === MATCHES.ACCOUNT_ID) input = '"' + input + '"' // ACCOUNT_ID has dots, potentially dashes, and will become object property - so needs to be wrapped in quotes
 					code = code.replace(match, input)
 				}

@@ -36,5 +36,28 @@ await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/collection`, {
 ```
 
 <TryItNowWithEnv />
+
+#### Fetching Collections
+
+In the next section, you will use the `[CONTRACT_ID]` of your new collection to create an NFT Series. You can get a list of your collections below below.
+
+The list of collections will be in the format `{ [CONTRACT_ID]: [COLLECTION_DATA], ... }`.
+
+Once you have your `[CONTRACT_ID]`, proceed to the next section to create an NFT Series!
+
+Example response:
+
+```js
+{"lachlans-collection.snft.testnet":{"title":"Lachlan's Collection","ts":1637199109816}}
+// The collection's contract ID is: lachlans-collection.snft.testnet
+```
+
+```js
+await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/collections`, {
+	method: `GET`,
+	headers: new Headers({ authorization: `Bearer [YOUR_API_KEY]` }),
+})
+```
+<TryItNowWithEnv />
 <Dialog />
 

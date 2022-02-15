@@ -6,36 +6,17 @@ import { Dialog } from '../../src/components/Dialog'
 
 # Create Claim Links
 
-First you need your NFT Series ID. You can get a list below.
+A **claim link** is a fundamental concept of Spearmint, and provides the ability to seamlessly get your NFTs into users' hands (or wallets, as the case may be). Claim links direct a user to a "claim page" that prompts users to connect their NEAR wallet if they have one, or else create a new wallet via [linkdrop](https://github.com/near/near-linkdrop) (this creates a pre-funded "implicit account," and all the user will need to do is choose a human-readable Account ID, save their seed phrase and claim your NFT! Easy as 🥧.)
 
-The response will be a set of Series IDs in the format `{ [SERIES_ID]: [SERIES_DATA], ... }`.
+You will need your NFT `[SERIES_ID]`. If you don't have that, go back to the "Create an NFT Series" page and follow the instructions under "Fetching All Series," then come back here.
 
-`SERIES_ID` is constructed as follows: `[CONTRACT_ID]/[SERIES_TITLE]`.
-
-Example response:
-
-```js
-{"lachlans-collection.snft.testnet/My First Series":{"ts":1637199109816}}
-// The Series ID is: lachlans-collection.snft.testnet/My First Series
-```
-
-#### Example:
-
-```js
-await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/series`, {
-	method: `GET`,
-	headers: new Headers({ authorization: `Bearer [YOUR_API_KEY]` }),
-})
-```
-<TryItNowWithEnv />
-
-Now you can use your Series ID to create a claim link for the NFT! 🎉
+Once you have your `[SERIES_ID]`, you can use it to create a claim link for the NFT Series! 🎉
 
 :::tip
 You can create a **maximum** of 500 claim links per request. To get more than 500 claim links, see "Create Many Links" below.
 :::
 
-#### Example:
+**Example (without `claimData`):**
 
 ```js
 await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/claim`, {
@@ -49,7 +30,66 @@ await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/claim`, {
 ```
 <TryItNowWithEnv />
 
-## Create > 500 Claim Links
+**With `claimData`:**
+
+A really cool feature of Spearmint is that you can define **webhooks** that Spearmint will call back to when a user claims an NFT &/or creates a NEAR account via linkdrop. This means that you can take action in your app in response to these Spearmint/NEAR events!
+
+You can also include any other data you wish inside the `claimData` object, and it will be posted back to your webhook along with the event data.
+
+**Example `claimData` object:**
+
+```js
+{
+	webhooks: {
+		onNftClaim: string // e.g. https://my-api.com/webhooks/nft-claimed
+		onWalletCreate: string // e.g. https://my-api.com/webhooks/wallet-created
+	},
+	...otherData, // any other properties that you wish to store on this claim object
+}
+```
+
+If you have specified webhooks when requesting a claimlink, Spearmint will send a `POST` request to these endpoints with the following body:
+
+**On NFT Claim:**
+
+```js
+{
+	accountId: string // e.g. your-new-nft-holder.near
+	timestamp: string // timestamp of the nft mint
+	data: Record<any, any> // any additional data you included inside the `claimData` object when initially requesting the claimlink
+}
+```
+
+**On Linkdrop (new account created):**
+
+```js
+{
+	timestamp: string // timestamp of the linkdrop
+	data: Record<any, any> // any additional data you included inside the `claimData` object when initially requesting the claimlink
+}
+```
+
+**Example (with `claimData`):**
+
+```js
+await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/claim`, {
+	method: `POST`,
+	headers: new Headers({ authorization: `Bearer [YOUR_API_KEY]` }),
+	body: JSON.stringify({
+		seriesId: `[SERIES_ID]`,
+		amount: [NUMBER_OF_LINKS],
+		claimData: {
+			webhooks: {
+				onNftClaim: `[YOUR_NFT_CLAIM_WEBHOOK]`,
+				onWalletCreate: `[YOUR_WALLET_CREATE_WEBHOOK]`,
+			}
+		}
+	})
+})
+```
+
+
+#### Create > 500 Claim Links
 
 You can batch-call the API and concatenate the results, outputting the final result to the console.
 
