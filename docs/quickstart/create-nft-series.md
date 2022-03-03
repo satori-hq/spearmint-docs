@@ -43,13 +43,15 @@ await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/series`, {
 :::tip
 To specify royalties for your NFT series, include optional **`royalty`** property in `nft-content` header.
 
-**`royalty`** can contain up to 10 entries in the format `[ACCOUNT_ID]: [ROYALTY_AMOUNT]`.
+**`royalty`** can contain up to 9 entries in the format `[ACCOUNT_ID]: [ROYALTY_AMOUNT]`.
 
 **`ROYALTY_AMOUNT`** should be calculated as **percentage points * 100**. E.g. 10% == `1000` or 1% == `100`.
 
+*NB: A Satori royalty of 2.5% will be added to all NFT series.*
+
 **WARNING:**
 - All Account IDs specified in royalty must be valid (existing) accounts
-- No more than 10 accounts may be specified
+- No more than 9 accounts may be specified
 :::
 
 *NB: `description` property is optional*
