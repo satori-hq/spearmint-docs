@@ -1,41 +1,61 @@
 ---
 sidebar_position: 3
 ---
+
 import { TryItNowWithEnv } from '../../src/components/TryItNow'
 import { Dialog } from '../../src/components/Dialog'
 
 # Create an NFT Series
 
-This is your NFT "template." It will define what your NFT is and the media that it represents.
+Think of a Series as your NFT template. It will define what your NFT is and the media that it represents.
 
 You will need the `[CONTRACT_ID]` of your collection. If you don't have that, go back to the "Create a Collection" page and follow the instructions under "Fetching Collections," then come back here.
 
+**Step 1: Funding your series**
+
+💰 It costs 0.05 NEAR **per copy** to create a series. This covers the future cost to [store](https://docs.near.org/docs/concepts/storage-staking) each NFT on the NEAR blockchain when they are minted.
+
+To calculate the cost to create your series, **multiply your total copies (total NFT supply for this series) by 0.05**, and that is the amount of NEAR that is required to create your series - no more, no less! So if you are creating a series with 10 copies, you should transfer 0.5N (`0.05 x 10 = 0.5`), or if you are creating a total supply of 100 copies in your series, you should transfer 5N (`0.05 x 100 = 5`). You get the idea! 🤓
+
+When you have determined the exact cost in NEAR, go to the [NEAR wallet](https://wallet.testnet.near.org), create an account if you don't already have one, and transfer this exact amount of NEAR to `snft.testnet`. When you've made the transfer, **copy the transaction hash** of your funding transfer and come back here to proceed!
+
 :::tip
+
+🚨 You must transfer the **exact amount** of NEAR required for your NFT series, calculated as the **total copies \* 0.05**. If you transfer more or less than this amount, the series creation will fail, and you will not be refunded!
+
+:::
+
+**Step 2: Creating your series**
+
+:::tip
+
 1. An NFT series can be created with or without royalties, as you wish. We demonstrate both options below.
 
 2. When you create a series, the template for that series is added to the deployed Smart Contract. Because this involves a state change on the NEAR blockchain, the request will take a couple seconds to return - just like when you created your Collection.
+
 :::
 
-*NB: `description` property is optional in both cases*
+_NB: `description` property is optional in both cases_
 
 **No royalties:**
 
 ```js
-
 await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/series`, {
-	method: `POST`,
-	headers: new Headers({
-		'authorization': `Bearer [YOUR_API_KEY]`,
-		'nft-content': JSON.stringify({
-			contractId: `[CONTRACT_ID]`,
-			title: `[SERIES_TITLE]`,
-			description: `[NFT_DESCRIPTION]`,
-			copies: [NUMBER_OF_COPIES],
-		})
-	}),
-	body: await fetch(`[IMAGE_URL]`).then(r => r.arrayBuffer())
-})
+  method: `POST`,
+  headers: new Headers({
+    authorization: `Bearer [YOUR_API_KEY]`,
+    "funding-hash": `[YOUR_FUNDING_HASH]`,
+    "nft-content": JSON.stringify({
+      contractId: `[CONTRACT_ID]`,
+      title: `[SERIES_TITLE]`,
+      description: `[NFT_DESCRIPTION]`,
+      copies: [NUMBER_OF_COPIES],
+    }),
+  }),
+  body: await fetch(`[IMAGE_URL]`).then((r) => r.arrayBuffer()),
+});
 ```
+
 <TryItNowWithEnv />
 
 **With royalties:**
@@ -45,36 +65,38 @@ To specify royalties for your NFT series, include optional **`royalty`** propert
 
 **`royalty`** can contain up to 9 entries in the format `[ACCOUNT_ID]: [ROYALTY_AMOUNT]`.
 
-**`ROYALTY_AMOUNT`** should be calculated as **percentage points * 100**. E.g. 10% == `1000` or 1% == `100`.
+**`ROYALTY_AMOUNT`** should be calculated as **percentage points \* 100**. E.g. 10% == `1000` or 1% == `100`.
 
-*NB: A Satori royalty of 2.5% will be added to all NFT series.*
+_NB: A Satori royalty of 2.5% will be added to all NFT series._
 
 **WARNING:**
+
 - All Account IDs specified in royalty must be valid (existing) accounts
 - No more than 9 accounts may be specified
+
 :::
 
-*NB: `description` property is optional*
+_NB: `description` property is optional_
 
 ```js
-
 await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/series`, {
-	method: `POST`,
-	headers: new Headers({
-		'authorization': `Bearer [YOUR_API_KEY]`,
-		'nft-content': JSON.stringify({
-			contractId: `[CONTRACT_ID]`,
-			title: `[SERIES_TITLE]`,
-			description: `[NFT_DESCRIPTION]`,
-			copies: [NUMBER_OF_COPIES],
-			royalty: {
-				[ACCOUNT_ID]: [ROYALTY_AMOUNT],
-			}
-		})
-	}),
-	body: await fetch(`[IMAGE_URL]`).then(r => r.arrayBuffer())
-})
+  method: `POST`,
+  headers: new Headers({
+    authorization: `Bearer [YOUR_API_KEY]`,
+    "nft-content": JSON.stringify({
+      contractId: `[CONTRACT_ID]`,
+      title: `[SERIES_TITLE]`,
+      description: `[NFT_DESCRIPTION]`,
+      copies: [NUMBER_OF_COPIES],
+      royalty: {
+        [ACCOUNT_ID]: [ROYALTY_AMOUNT],
+      },
+    }),
+  }),
+  body: await fetch(`[IMAGE_URL]`).then((r) => r.arrayBuffer()),
+});
 ```
+
 <TryItNowWithEnv />
 
 #### Fetching All Series
@@ -96,10 +118,11 @@ Example response:
 
 ```js
 await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/series`, {
-	method: `GET`,
-	headers: new Headers({ authorization: `Bearer [YOUR_API_KEY]` }),
-})
+  method: `GET`,
+  headers: new Headers({ authorization: `Bearer [YOUR_API_KEY]` }),
+});
 ```
+
 <TryItNowWithEnv />
 
 #### Fetching a Single Series
@@ -112,11 +135,12 @@ Be sure to URL-encode the series ID, as it includes a `/`!
 
 ```js
 await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/series/[SERIES_ID]`, {
-	method: `GET`,
-	headers: new Headers({
-		'authorization': `Bearer [YOUR_API_KEY]`,
-	}),
-})
+  method: `GET`,
+  headers: new Headers({
+    authorization: `Bearer [YOUR_API_KEY]`,
+  }),
+});
 ```
+
 <TryItNowWithEnv />
 <Dialog />

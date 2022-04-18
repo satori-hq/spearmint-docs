@@ -1,18 +1,27 @@
 ---
 sidebar_position: 2
 ---
+
 import { TryItNowWithEnv } from '../../src/components/TryItNow'
 import { Dialog } from '../../src/components/Dialog'
 
 # Create a Collection
 
-In order to get started you will need a Collection (Smart Contract deployed on NEAR) to create your NFT series from. Think of your contract/collection like an art collection that may contain many artworks, some of which are 1/1 and some 1/100 series.
+In order to create your first NFT series, you will need a Collection (a Smart Contract deployed on NEAR). Think of your contract/collection like an art collection that may contain many artworks, some of which are 1/1 and some 1/100 series:
 
-***Collection (Smart Contract) > NFT Series > NFT***
+**_Collection (Smart Contract) > NFT Series > NFT_**
+
+Let's go! 🚀
+
+**Step 1: Funding your collection**
+
+💰 It costs 5 NEAR to deploy a collection. This covers the cost to [store](https://docs.near.org/docs/concepts/storage-staking) your contract code on the NEAR blockchain. The first step is to go to the [NEAR wallet](https://wallet.testnet.near.org), create an account if you don't already have one, and **transfer 5 NEAR to `snft.testnet`.** When you've made the transfer, **copy the transaction hash** of your funding transfer and come back here to proceed!
+
+**Step 2: Creating your collection**
 
 When you create a new Collection via the "Try it now!" button below, you may notice that the request takes a couple seconds to return. That's because it deploying a new Smart Contract to the NEAR blockchain. Cool, huh! 😎
 
-*NB: Currently, collection names must be unique globally across all Spearmint apps. This won't always be the case, but in the meantime, if you're trying to use a fairly generic collection name and it's not available, that's why!*
+_NB: Currently, collection names must be unique globally across all Spearmint apps. This won't always be the case, but in the meantime, if you're trying to use a fairly generic collection name and it's not available, that's why!_
 
 :::tip
 
@@ -21,18 +30,22 @@ When you create a new Collection via the "Try it now!" button below, you may not
 2. Once you have your app set up, you won't need to fill in `[YOUR_APP_NAME]` and `[YOUR_API_KEY]` as they will be inserted automatically.
 
 3. Collection title must be 32 characters or fewer.
+
 :::
 
 #### Example:
 
 ```js
 await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/collection`, {
-	method: `POST`,
-	headers: new Headers({ authorization: `Bearer [YOUR_API_KEY]` }),
-	body: JSON.stringify({
-		title: `[YOUR_DESIRED_COLLECTION_TITLE]`
-	})
-})
+  method: `POST`,
+  headers: new Headers({
+    authorization: `Bearer [YOUR_API_KEY]`,
+    "funding-hash": `[YOUR_FUNDING_HASH]`,
+  }),
+  body: JSON.stringify({
+    title: `[YOUR_DESIRED_COLLECTION_TITLE]`,
+  }),
+});
 ```
 
 <TryItNowWithEnv />
@@ -54,10 +67,10 @@ Example response:
 
 ```js
 await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/collections`, {
-	method: `GET`,
-	headers: new Headers({ authorization: `Bearer [YOUR_API_KEY]` }),
-})
+  method: `GET`,
+  headers: new Headers({ authorization: `Bearer [YOUR_API_KEY]` }),
+});
 ```
+
 <TryItNowWithEnv />
 <Dialog />
-
