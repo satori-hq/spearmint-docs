@@ -83,6 +83,7 @@ await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/series`, {
   method: `POST`,
   headers: new Headers({
     authorization: `Bearer [YOUR_API_KEY]`,
+    "funding-hash": `[YOUR_FUNDING_HASH]`,
     "nft-content": JSON.stringify({
       contractId: `[CONTRACT_ID]`,
       title: `[SERIES_TITLE]`,
