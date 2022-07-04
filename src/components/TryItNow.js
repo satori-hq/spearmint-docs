@@ -8,6 +8,7 @@ import "./DialogActions";
 const MATCHES = {
   YOUR_DESIRED_APP_NAME: "[YOUR_DESIRED_APP_NAME]",
   NFT_DESCRIPTION: "[NFT_DESCRIPTION]",
+  EXTRA_ASSET_FILENAME: "[EXTRA_ASSET_FILENAME]",
   API_ORIGIN: "[API_ORIGIN]",
   YOUR_APP_NAME: "[YOUR_APP_NAME]",
   YOUR_API_KEY: "[YOUR_API_KEY]",
@@ -17,7 +18,7 @@ const MATCHES = {
   NUMBER_OF_LINKS: "[NUMBER_OF_LINKS]",
 };
 
-const allowNoInput = [MATCHES.NFT_DESCRIPTION];
+const allowNoInput = [MATCHES.NFT_DESCRIPTION, MATCHES.EXTRA_ASSET_FILENAME];
 
 const isValidInput = (match, input) => {
   if (!input && !allowNoInput.includes(match)) return false;
@@ -57,11 +58,19 @@ export const TryItNow = ({ requiresKeys }) => {
 
         let code = target.previousSibling.textContent;
 
-        const matches = code.match(/\[.*?\]/gi).filter((m) => m.length > 2);
+        const matches = code
+          .match(/\[.*?\]/gi)
+          .filter((m) => {
+            return m.length > 2;
+          })
+          .map((m) => {
+            if (m.startsWith("[ ")) return "[MEDIA_ASSET_FILENAME]"; // `MEDIA_ASSET_FILENAME` starts with "[ " as it is inside an array
+            return m;
+          });
 
         try {
           for (let i = 0; i < matches.length; i++) {
-            const match = matches[i];
+            let match = matches[i];
             let input;
             switch (match) {
               case MATCHES.API_ORIGIN:
@@ -87,6 +96,14 @@ export const TryItNow = ({ requiresKeys }) => {
               input = encodeURIComponent(input); // SERIES_ID contains a slash, so needs to be uri-encoded (unless it is in the request body, hence !code.includes(body))
             if (input && match === MATCHES.ACCOUNT_ID)
               input = '"' + input + '"'; // ACCOUNT_ID has dots, potentially dashes, and will become object property - so needs to be wrapped in quotes
+            if (!input && match === MATCHES.EXTRA_ASSET_FILENAME) {
+              input = "";
+            }
+            if (!input && match === MATCHES.NFT_DESCRIPTION) {
+              // add backticks to string that will be replaced, so we get null and not `null` (string)
+              match = `\`${match}\``;
+              input = null;
+            }
             code = code.replace(match, input);
           }
           eval(`(async () => {
