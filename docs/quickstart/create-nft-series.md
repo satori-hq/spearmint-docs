@@ -103,66 +103,25 @@ The following 9 items will need to be sent with your request in order to create 
 
 9️⃣ **`funding-hash`** (required): the transaction hash from your NEAR Wallet transaction in Step 2. _NB: This is sent in `funding-hash` header._
 
-:::tipA Quick Note
-
-1. An NFT series can be created with or without royalties, as you wish. We demonstrate both options below.
-
-2. Only one media asset can be uploaded using the _Try It Now_ button below, but you can add as many assets as you'd like in your own calls!
-
-3. When you create a series, the template for that series is added to the deployed Smart Contract. Because this involves a state change on the NEAR blockchain, the request will take a couple seconds to return - just like when you created your Collection.
-
-:::
-
-_NB: `description` property is optional_
-
-**No royalties:**
-
-```js
-await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/series`, {
-  method: `POST`,
-  headers: new Headers({
-    authorization: `Bearer [YOUR_API_KEY]`,
-    "funding-hash": `[YOUR_FUNDING_HASH]`,
-  }),
-  body: JSON.stringify({
-    contractId: `[CONTRACT_ID]`,
-    title: `[SERIES_TITLE]`,
-    description: `[NFT_DESCRIPTION]`,
-    copies: [NUMBER_OF_COPIES],
-    mediaCid: `[IPFS_DIRECTORY_CID]`,
-    assets: [
-      [
-        `[MEDIA_ASSET_FILENAME]`,
-        [MEDIA_ASSET_TOTAL_SUPPLY],
-        `[EXTRA_ASSET_FILENAME]`,
-      ],
-    ],
-    coverAsset: `[COVER_MEDIA_ASSET_FILENAME]`,
-  }),
-});
-```
-
-<TryItNowWithEnv />
-
-**With royalties:**
-
 :::tip
-To specify royalties for your NFT series, include optional **`royalty`** property in `nft-content` header.
 
-**`royalty`** can contain up to 9 entries in the format `[ACCOUNT_ID]: [ROYALTY_AMOUNT]`.
+1. Only one media asset can be uploaded using the _Try It Now_ button below, but you can add as many assets as you'd like in your own calls!
+
+2. When you create a series, the template for that series is added to the deployed Smart Contract. Because this involves a state change on the NEAR blockchain, the request will take a couple seconds to return - just like when you created your Collection.
+
+3. An NFT series can be created with or without royalties, as you wish. To specify royalties for your NFT series, include optional **`royalty`** property in your request body.
+
+**`royalty`** can contain up to 9 entries in the format `[ACCOUNT_ID]: [ROYALTY_AMOUNT]`. All Account IDs must be valid (existing) accounts.
 
 **`ROYALTY_AMOUNT`** should be calculated as **percentage points \* 100**. E.g. 10% == `1000` or 1% == `100`.
 
 _NB: A Satori royalty of 2.5% will be added to all NFT series._
 
-**WARNING:**
-
-- All Account IDs specified in royalty must be valid (existing) accounts
-- No more than 9 accounts may be specified
-
 :::
 
 _NB: `description` property is optional_
+
+#### Example Request:
 
 ```js
 await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/series`, {
@@ -194,7 +153,63 @@ await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/series`, {
 
 <TryItNowWithEnv />
 
-#### Fetching All Series
+#### Example Responses by Status Code:
+
+`200` (success):
+
+```js
+/*
+
+For more information on FinalExecutionOutcome shape, please visit https://near.github.io/near-api-js/interfaces/providers_provider.finalexecutionoutcome.html
+
+*/
+
+{
+  contractId: string; // the contract ID for the collection that the series was created within
+  title: string; // the title of your newly created NFT series
+  nftResponse: FinalExecutionOutcome; // the outcome of the Create Series function call on your NFT contract
+  fundingResponse: FinalExecutionOutcome; // the outcome of the the transaction where we forwarded the funds to your NFT contract
+}
+```
+
+`400`, `401`, `403` (validation error):
+
+```js
+/*
+
+More info on status codes:
+- 400 implies that the funding-hash provided in your request header can be reused
+- 401 implies that the credentials (API key) you provided do not match our records for your account
+- 403 implies that the funding-hash you provided has previously been used and thus cannot be reused
+
+*/
+
+{
+  error: string; // a descriptive error string indicating what went wrong in your request and how to resolve the validation error
+}
+```
+
+`500` (internal error):
+
+```js
+/*
+
+A 500 response code implies that your request was formatted correctly and the funding-hash provided in your request header was valid, but there was an internal error completing your request.
+
+The funding-hash cannot be re-used, but we will have refunded the funds to the NEAR account that funded the initial transaction.
+
+*/
+
+{
+  error: {
+    message: string; // a descriptive error string indicating what went wrong in your request
+    refundHash?: string; // transaction hash for the refund transaction
+    refundError?: string // in the very unlikely event that we were unable to process your refund, those details will be provided here. If you encounter this property, please reach out to us at support@satori.art.
+  };
+}
+```
+
+#### FETCHING ALL SERIES
 
 In the next section, you will use your NFT `[SERIES_ID]` to generate a claim link. You can get a list of your series below.
 
@@ -209,7 +224,7 @@ Example response:
 // The Series ID is: lachlans-collection.snft.testnet/My First Series
 ```
 
-#### Example:
+#### Example Request:
 
 ```js
 await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/series`, {
@@ -220,13 +235,47 @@ await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/series`, {
 
 <TryItNowWithEnv />
 
-#### Fetching a Single Series
+#### Example Responses by Status Code:
+
+`200` (success):
+
+```js
+/*
+
+An object where the keys are your series IDs, and the values are in the following shape:
+
+{
+  ts: number // the timestamp when your NFT series was created
+}
+
+E.g.:
+
+{
+
+  "lachlans-collection.snft.testnet/My NFT Series": {
+
+    "ts":1637199109816
+
+  },
+
+  ...
+
+}
+
+*/
+```
+
+`401` (validation error): the credentials (API key) you provided do not match our records for your account.
+
+#### FETCHING A SINGLE SERIES
 
 You can fetch a single series by its ID for more information on the series, such as `totalMinted`, `totalAvailable`, `royalties` and `metadata` (`title`, `description`, `media`, `copies`).
 
 :::tip
 Be sure to URL-encode the series ID, as it includes a `/`!
 :::
+
+#### Example Request:
 
 ```js
 await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/series/[SERIES_ID]`, {
@@ -238,4 +287,39 @@ await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/series/[SERIES_ID]`, {
 ```
 
 <TryItNowWithEnv />
+
+#### Example Responses by Status Code:
+
+`200` (success):
+
+```js
+{
+  contractId: string // the contract ID for the collection that this series exists within
+  seriesId: string // the series ID for your NFT series (formatted as contractId + '/' + seriesTitle)
+  copiesMinted: number // the number of NFTs that have been minted on this series
+  copiesRemaining: number // the number of NFTs that are available to be minted on this series (can be calculated manually as metadata.copies - copiesMinted)
+  metadata: {
+    title: string // series title
+    copies: number // total copies for series
+    description: string | null // series description
+    media: string // series media reference (append to https://ipfs.io/ipfs/ to construct full media URL)
+  }
+  royalties: Record<AccountId, number> // royalties for this NFT series, which will be paid out in the event of a secondary sale on a marketplace that supports the NEAR NFT royalty/payout standard.
+}
+```
+
+`401` (validation error): the credentials (API key) you provided do not match our records for your account.
+
+`404` (not found): the series ID you provided could not be found.
+
+`500` (server error): an internal error was encountered while trying to fetch your series.
+
+```js
+{
+  error: {
+    message: string; // a descriptive error string indicating what went wrong in your request
+  }
+}
+```
+
 <Dialog />

@@ -33,7 +33,7 @@ _NB: Currently, collection names must be unique globally across all Spearmint ap
 
 :::
 
-#### Example:
+#### Example Request:
 
 ```js
 await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/collection`, {
@@ -50,20 +50,70 @@ await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/collection`, {
 
 <TryItNowWithEnv />
 
-#### Fetching Collections
+#### Example Responses by Status Code:
 
-In the next section, you will use the `[CONTRACT_ID]` of your new collection to create an NFT Series. You can get a list of your collections below below.
+`200` (success):
+
+```js
+/*
+
+For more information on FinalExecutionOutcome shape, please visit https://near.github.io/near-api-js/interfaces/providers_provider.finalexecutionoutcome.html
+
+*/
+
+{
+  contractId: string; // the contract ID for the collection you just created
+  accountResponse: FinalExecutionOutcome; // the outcome of the Create Account call to create `contractId` account
+  deployResponse: FinalExecutionOutcome; // the outcome of the Deploy Contract and Init Contract calls to `contractId` account
+}
+```
+
+`400`, `401`, `403` (validation error):
+
+```js
+/*
+
+More info on status codes:
+- 400 implies that the funding-hash provided in your request header can be reused
+- 401 implies that the credentials (API key) you provided do not match our records for your account
+- 403 implies that the funding-hash you provided has previously been used and thus cannot be reused
+
+*/
+
+{
+  error: string; // a descriptive error string indicating what went wrong in your request and how to resolve the validation error
+}
+```
+
+`500` (internal error):
+
+```js
+/*
+
+A 500 response code implies that your request was formatted correctly and the funding-hash provided in your request header was valid, but there was an internal error completing your request.
+
+The funding-hash cannot be re-used, but we will have refunded the funds to the NEAR account that funded the initial transaction.
+
+*/
+
+{
+  error: {
+    message: string; // a descriptive error string indicating what went wrong in your request
+    refundHash?: string; // transaction hash for the refund transaction
+    refundError?: string // in the very unlikely event that we were unable to process your refund, those details will be provided here. If you encounter this property, please reach out to us at support@satori.art.
+  };
+}
+```
+
+#### FETCHING COLLECTIONS
+
+In the next section (Create an NFT Series), you will use the `[CONTRACT_ID]` of your new collection to create an NFT Series. You can get a list of your collections below below.
 
 The list of collections will be in the format `{ [CONTRACT_ID]: [COLLECTION_DATA], ... }`.
 
 Once you have your `[CONTRACT_ID]`, proceed to the next section to create an NFT Series!
 
-Example response:
-
-```js
-{"lachlans-collection.snft.testnet":{"title":"Lachlan's Collection","ts":1637199109816}}
-// The collection's contract ID is: lachlans-collection.snft.testnet
-```
+#### Example Request:
 
 ```js
 await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/collections`, {
@@ -73,4 +123,40 @@ await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/collections`, {
 ```
 
 <TryItNowWithEnv />
+
+#### Example Responses by Status Code:
+
+`200` (success):
+
+```js
+/*
+
+An object where the keys are your contract IDs, and the values are in the following shape:
+
+{
+  title: string // the title of your contract, as it will appear in the NEAR wallet and other UIs
+  ts: number // the timestamp when your contract/collection was created
+}
+
+E.g.:
+
+{
+
+  "lachlans-collection.snft.testnet": {
+
+    "title":"Lachlan's Collection",
+
+    "ts":1637199109816
+
+  },
+
+  ...
+
+}
+
+*/
+```
+
+`401` (validation error): the credentials (API key) you provided do not match our records for your account.
+
 <Dialog />
