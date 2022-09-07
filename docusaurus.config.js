@@ -47,8 +47,8 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 			navbar: {
 				logo: {
 					alt: 'Spearmint by Satori Logo',
-					src: 'img/spearmint.svg',
-					srcDark: 'img/spearmint-dark.svg'
+					src: 'img/spearmint-light.png',
+					srcDark: 'img/spearmint-dark.png'
 				},
 				items: [
 					{
