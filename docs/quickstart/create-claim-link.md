@@ -44,7 +44,7 @@ You can also include any other data you wish inside the `claimData` object, and 
 {
 	webhooks: {
 		onNftClaim: string // e.g. https://my-api.com/webhooks/nft-claimed
-		onWalletCreate: string // e.g. https://my-api.com/webhooks/wallet-created
+		onLinkdrop: string // e.g. https://my-api.com/webhooks/linkdrop
 	},
 	...otherData, // any other properties that you wish to store on this claim object
 }
@@ -83,7 +83,7 @@ await fetch(`[API_ORIGIN]/v1/api/[YOUR_APP_NAME]/claim`, {
     claimData: {
       webhooks: {
         onNftClaim: `[YOUR_NFT_CLAIM_WEBHOOK]`,
-        onWalletCreate: `[YOUR_WALLET_CREATE_WEBHOOK]`,
+        onLinkdrop: `[YOUR_LINKDROP_WEBHOOK]`,
       },
     },
   }),
